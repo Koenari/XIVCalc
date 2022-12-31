@@ -1,13 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <PackageProjectUrl>https://github.com/Koenari/XIVCalc</PackageProjectUrl>
+    <Authors>Koenari</Authors>
+    <Company></Company>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>XIVCalc</AssemblyName>
+    <Product>XIVCalc C# Library</Product>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RootNamespace>XIVCalc</RootNamespace>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Koenari/XIVCalc.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lumina.Excel" Version="6.2.1" />
+    <PackageReference Include="Lumina.Excel" Version="6.2.1">
+      <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
