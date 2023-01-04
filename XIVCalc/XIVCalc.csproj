@@ -2,9 +2,12 @@
 
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/Koenari/XIVCalc</PackageProjectUrl>
+    <PackageId>Koenari.XIVCalc</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Koenari</Authors>
     <Company></Company>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
+    
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -14,17 +17,25 @@
   <PropertyGroup>
     <AssemblyName>XIVCalc</AssemblyName>
     <Product>XIVCalc C# Library</Product>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>A C# Library for reverse engineered/crowd sourced calculations for FFXIV</Description>
     <RootNamespace>XIVCalc</RootNamespace>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Koenari/XIVCalc.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Lumina.Excel" Version="6.2.1">
       <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\"></None>
   </ItemGroup>
 
 </Project>
