@@ -104,7 +104,14 @@ public class LevelTable
     public static int MP(int level) => level > _levelTable.Count ? 0 : _levelTable[level].MP;
     public static int MAIN(int level) => level > _levelTable.Count ? 0 : _levelTable[level].MAIN;
     public static int SUB(int level) => level > _levelTable.Count ? 0 : _levelTable[level].SUB;
-    public static int DIV(int level) => level > _levelTable.Count ? 0 : _levelTable[level].DIV;
+    /// <summary>
+    /// The DIV value is returned as double by default to prevent unintentional rounding on division.
+    /// See <see cref="IntDIV(int)"/> for integer variant.
+    /// </summary>
+    /// <param name="level">Level to get Value for.</param>
+    /// <returns>DIV value for level</returns>
+    public static double DIV(int level) => level > _levelTable.Count ? 0 : _levelTable[level].DIV;
+    public static int IntDIV(int level) => level > _levelTable.Count ? 0 : _levelTable[level].DIV;
     public static int HP(int level) => level > _levelTable.Count ? 0 : _levelTable[level].HP;
     public static int ELMT(int level) => level > _levelTable.Count ? 0 : _levelTable[level].ELMT;
     public static int THREAT(int level) => level > _levelTable.Count ? 0 : _levelTable[level].THREAT;

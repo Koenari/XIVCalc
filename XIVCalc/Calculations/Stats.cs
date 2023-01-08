@@ -10,17 +10,17 @@ public class StatEquations
     /// <param name="statType">Which stat is being queried</param>
     /// <param name="job">Current job to evaluate for</param>
     /// <returns>Multiplicative modifier to apply to stat</returns>
-    public static float GetJobModifier(byte statType, ClassJob? job) => GetJobModifier((StatType)statType, job);
+    public static double GetJobModifier(byte statType, ClassJob? job) => GetJobModifier((StatType)statType, job);
     /// <summary>
     /// Calculates a multiplicative modifier based on the Job/class
     /// </summary>
     /// <param name="statType">Which stat is being queried</param>
     /// <param name="job">Current job to evaluate for</param>
     /// <returns>Multiplicative modifier to apply to stat</returns>
-    public static float GetJobModifier(StatType statType, ClassJob? job)
+    public static double GetJobModifier(StatType statType, ClassJob? job)
     {
         if (job is null)
-            return 1f;
+            return 1.0;
         return statType switch
         {
             StatType.Strength => job.ModifierStrength,
@@ -40,16 +40,16 @@ public class StatEquations
     /// <param name="level">current level of the job</param>
     /// <param name="job">curretn job</param>
     /// <returns>Attack Modifier 'm'</returns>
-    public static float GetAttackModifierM(int level, ClassJob job) => (job.IsTank(), level) switch
+    public static double GetAttackModifierM(int level, ClassJob job) => (job.IsTank(), level) switch
     {
         //See: https://github.com/Kouzukii/ffxiv-characterstatus-refined/blob/master/CharacterPanelRefined/LevelModifiers.cs
         (true, <= 80) => level + 35,
-        (true, <= 90) => (level - 80) * 4.1f + 115,
+        (true, <= 90) => (level - 80) * 4.1 + 115,
         (_, <= 50) => 75,
-        (_, <= 70) => (level - 50) * 2.5f + 75,
-        (_, <= 80) => (level - 70) * 4 + 125,
-        (_, <= 90) => (level - 80) * 3 + 165,
-        _ => float.NaN,
+        (_, <= 70) => (level - 50) * 2.5 + 75,
+        (_, <= 80) => (level - 70) * 4.0 + 125,
+        (_, <= 90) => (level - 80) * 3.0 + 165,
+        _ => double.NaN,
     };
     /// <summary>
     /// Calculates the trait modifier
@@ -57,34 +57,34 @@ public class StatEquations
     /// <param name="level">current level of the job</param>
     /// <param name="job">curretn job</param>
     /// <returns>Trait modifier</returns>
-    public static float GetTraitModifier(int level, ClassJob job) => (Job)job.RowId switch
+    public static double GetTraitModifier(int level, ClassJob job) => (Job)job.RowId switch
     {
         //See: https://github.com/Kouzukii/ffxiv-characterstatus-refined/blob/master/CharacterPanelRefined/JobInfo.cs
         Job.BLU => level switch
         {
-            >= 50 => 1.5f,
-            >= 40 => 1.4f,
-            >= 30 => 1.3f,
-            >= 20 => 1.2f,
-            >= 10 => 1.1f,
-            _ => 1,
+            >= 50 => 1.5,
+            >= 40 => 1.4,
+            >= 30 => 1.3,
+            >= 20 => 1.2,
+            >= 10 => 1.1,
+            _ => 1.0,
         },
         Job.DNC => level switch
         {
-            >= 60 => 1.2f,
-            >= 50 => 1.1f,
-            _ => 1f,
+            >= 60 => 1.2,
+            >= 50 => 1.1,
+            _ => 1.0,
         },
         _ => (job.IsCaster(), job.IsPhysicalRanged(), level) switch
         {
             //Maim and mend
-            (true, _, >= 40) => 1.3f,
-            (true, _, >= 20) => 1.1f,
-            (true, _, _) => 1.0f,
+            (true, _, >= 40) => 1.3,
+            (true, _, >= 20) => 1.1,
+            (true, _, _) => 1.0,
             // increased action damage trait
-            (_, true, >= 40) => 1.2f,
-            (_, true, >= 20) => 1.1f,
-            _ => 1f,
+            (_, true, >= 40) => 1.2,
+            (_, true, >= 20) => 1.1,
+            _ => 1.0,
         }
     };
     /// <summary>
@@ -94,53 +94,53 @@ public class StatEquations
     /// <param name="level">Level of the job supplied</param>
     /// <param name="job">THe job to be evaluated for</param>
     /// <returns>A multiplier to calcualte HP from Vit</returns>
-    public static float GetHPMultiplier(int level, ClassJob job) => job.IsTank() switch
+    public static double GetHPMultiplier(int level, ClassJob job) => job.IsTank() switch
     {
         //See: https://github.com/Kouzukii/ffxiv-characterstatus-refined/blob/master/CharacterPanelRefined/LevelModifiers.cs
-        true => 6.7f + 0.31f * level,
-        _ => 4.5f + 0.22f * level
+        true => 6.7 + 0.31 * level,
+        _ => 4.5 + 0.22 * level
     };
-    public static float CalcCritDamage(int criticalHit, int level)
-        => MathF.Floor(200 * (criticalHit - LevelTable.SUB(level)) / LevelTable.DIV(level) + 1400) / 1000f;
-    public static float CalcCritRate(int criticalHit, int level)
-        => MathF.Floor(200 * (criticalHit - LevelTable.SUB(level)) / LevelTable.DIV(level) + 50) / 1000f;
-    public static float CalcDirectHitRate(int directHit, int level)
-        => MathF.Floor(550 * (directHit - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000f;
-    public static float CalcDeterminationMultiplier(int determination, int level)
-        => MathF.Floor(1000 + 140 * (determination - LevelTable.MAIN(level)) / LevelTable.DIV(level)) / 1000f;
-    public static float CalcTenacityModifier(int tenacity, int level)
-        => (MathF.Floor(100 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level))) / 1000f;
-    public static float CalcMPPerSecond(int piety, int level)
-        => 200f + MathF.Floor(150 * (piety - LevelTable.MAIN(level)) / LevelTable.DIV(level));
-    public static float CalcGCD(int speed, int level)
-        => MathF.Floor(2500f * (1000 + MathF.Ceiling(130 * (LevelTable.SUB(level) - speed) / LevelTable.DIV(level))) / 10000f) / 100f;
-    public static float CalcAADotMultiplier(int speed, int level)
-        => (1000f + MathF.Ceiling(130f * (speed - LevelTable.SUB(level)) / LevelTable.DIV(level))) / 1000f;
-    public static float CalcDefenseMitigation(int defense, int level)
-        => MathF.Floor(15 * defense / LevelTable.DIV(level)) / 100f;
-    public static float CalcHP(int vitality, int level, ClassJob job)
-        => MathF.Floor(LevelTable.HP(level) * job.ModifierHitPoints / 100f)
-        + MathF.Floor((vitality - LevelTable.MAIN(level)) * GetHPMultiplier(level, job));
-    public static float CalcBaseDamage(int weaponDamage, int mainStat, int determination, int tenacity, int level, ClassJob job)
+    public static double CalcCritDamage(int criticalHit, int level)
+        => Math.Floor(200 * (criticalHit - LevelTable.SUB(level)) / LevelTable.DIV(level) + 1400) / 1000d;
+    public static double CalcCritRate(int criticalHit, int level)
+        => Math.Floor(200 * (criticalHit - LevelTable.SUB(level)) / LevelTable.DIV(level) + 50) / 1000d;
+    public static double CalcDirectHitRate(int directHit, int level)
+        => Math.Floor(550 * (directHit - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
+    public static double CalcDeterminationMultiplier(int determination, int level)
+        => Math.Floor(1000 + 140 * (determination - LevelTable.MAIN(level)) / LevelTable.DIV(level)) / 1000d;
+    public static double CalcTenacityModifier(int tenacity, int level)
+        => (Math.Floor(100 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level))) / 1000d;
+    public static double CalcMPPerSecond(int piety, int level)
+        => 200d + Math.Floor(150 * (piety - LevelTable.MAIN(level)) / (double)LevelTable.DIV(level));
+    public static double CalcGCD(int speed, int level)
+        => Math.Floor(2500d * (1000 + Math.Ceiling(130 * (LevelTable.SUB(level) - speed) / (double)LevelTable.DIV(level))) / 10000d) / 100d;
+    public static double CalcAADotMultiplier(int speed, int level)
+        => (1000d + Math.Ceiling(130d * (speed - LevelTable.SUB(level)) / LevelTable.DIV(level))) / 1000d;
+    public static double CalcDefenseMitigation(int defense, int level)
+        => Math.Floor(15 * defense / LevelTable.DIV(level)) / 100d;
+    public static double CalcHP(int vitality, int level, ClassJob job)
+        => Math.Floor(LevelTable.HP(level) * job.ModifierHitPoints / 100d)
+        + Math.Floor((vitality - LevelTable.MAIN(level)) * GetHPMultiplier(level, job));
+    public static double CalcBaseDamage(int weaponDamage, int mainStat, int determination, int tenacity, int level, ClassJob job)
     {
-        float m = GetAttackModifierM(level, job);
-        float trait = GetTraitModifier(level, job);
-        float baseDmg =
-            MathF.Floor((weaponDamage + MathF.Floor(LevelTable.MAIN(level) * GetJobModifier(job.PrimaryStat, job) / 10f))
-            * (100 + (mainStat - LevelTable.MAIN(level)) * m / LevelTable.MAIN(level))) / 100f;
-        float determinationMultiplier = CalcDeterminationMultiplier(determination, level);
-        float tenacityMultiplier = 1f + (job.IsTank() ? CalcTenacityModifier(tenacity, level) : 0f);
-        return baseDmg * determinationMultiplier * tenacityMultiplier * trait / 100f;
+        double m = GetAttackModifierM(level, job);
+        double trait = GetTraitModifier(level, job);
+        double baseDmg =
+            Math.Floor((weaponDamage + Math.Floor(LevelTable.MAIN(level) * GetJobModifier(job.PrimaryStat, job) / 10d))
+            * (100 + (mainStat - LevelTable.MAIN(level)) * m / LevelTable.MAIN(level))) / 100d;
+        double determinationMultiplier = CalcDeterminationMultiplier(determination, level);
+        double tenacityMultiplier = 1d + (job.IsTank() ? CalcTenacityModifier(tenacity, level) : 0d);
+        return baseDmg * determinationMultiplier * tenacityMultiplier * trait / 100d;
     }
-    public static float CalcAvarageDamage(int weaponDamage, int mainStat, int criticalHit, int directHit, int determination, int tenacity, int level, ClassJob job)
+    public static double CalcAvarageDamage(int weaponDamage, int mainStat, int criticalHit, int directHit, int determination, int tenacity, int level, ClassJob job)
     {
-        float baseDmg = CalcBaseDamage(weaponDamage, mainStat, determination, tenacity, level, job);
-        float critRate = CalcCritRate(criticalHit, level);
-        float DHRate = CalcDirectHitRate(directHit, level);
-        float critDmgMod = CalcCritDamage(criticalHit, level);
-        float dHDmgMod = 1.25f;
-        float critDHRate = critRate * DHRate;
-        float normalHitRate = 1 - critRate - DHRate + critDHRate;
+        double baseDmg = CalcBaseDamage(weaponDamage, mainStat, determination, tenacity, level, job);
+        double critRate = CalcCritRate(criticalHit, level);
+        double DHRate = CalcDirectHitRate(directHit, level);
+        double critDmgMod = CalcCritDamage(criticalHit, level);
+        double dHDmgMod = 1.25;
+        double critDHRate = critRate * DHRate;
+        double normalHitRate = 1 - critRate - DHRate + critDHRate;
         return baseDmg * (normalHitRate + dHDmgMod * critDmgMod * critDHRate + critDmgMod * (critRate - critDHRate) + dHDmgMod * DHRate);
     }
 }
