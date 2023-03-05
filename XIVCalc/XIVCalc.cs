@@ -1,11 +1,31 @@
-﻿namespace XIVCalc;
+﻿using Lumina.Excel;
+
+namespace XIVCalc;
 internal class XIVCalc
 {
 
-    public static void Init()
-    {
-    }
+    private static readonly Lazy<ExcelSheet<Lumina.Excel.GeneratedSheets.Action>?> _actionSheetLoader =
+        new(() => ExcelModule?.GetSheet<Lumina.Excel.GeneratedSheets.Action>());
+    internal static ExcelSheet<Lumina.Excel.GeneratedSheets.Action>? ActionSheet => LuminaIsSetup ? _actionSheetLoader.Value : null;
 
+    internal static ExcelModule? ExcelModule;
+    internal static bool LuminaIsSetup => ExcelModule != null;
+    public static void Init(ExcelModule? excelModule = null)
+    {
+        ExcelModule = excelModule;
+        if (ExcelModule != null)
+            SetUpWithLumina();
+        else
+            SetUpWithoutLumina();
+    }
+    private static void SetUpWithLumina()
+    {
+
+    }
+    private static void SetUpWithoutLumina()
+    {
+
+    }
 }
 public enum Job : byte
 {

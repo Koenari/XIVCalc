@@ -1,4 +1,5 @@
 ﻿using Lumina.Excel.GeneratedSheets;
+using XIVCalc.Interfaces;
 
 namespace XIVCalc;
 
@@ -28,4 +29,6 @@ public static class ClassJobExtensions
         _ => false
     };
 
+    public static Lumina.Excel.GeneratedSheets.Action? LuminaAction(this IGameAction gameAction) =>
+        XIVCalc.ActionSheet?.GetRow(gameAction.ID);
 }

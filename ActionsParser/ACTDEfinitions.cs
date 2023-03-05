@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Newtonsoft.Json;
+using System.Globalization;
 
 namespace XivCalc.ActionsParser.ActDefinitions;
 
@@ -15,16 +16,17 @@ public class RawDamageItem
 {
     public int potency { get; set; }
     public int combo { get; set; }
-    public int targetindex { get; set; }
+    public object? targetindex { get; set; } = null;
 }
 
 public class ActionsItem
 {
-    public int ID => int.Parse($"0x{info.Key}", NumberStyles.HexNumber);
+    public uint ID => uint.TryParse($"{info.Key}", NumberStyles.HexNumber, null, out uint parsed) ? parsed : 0;
     public string Name => info.Value;
+    [JsonProperty]
     public KeyValuePair<string, string> info { get; set; }
-    public List<RawDamageItem> damage { get; set; }
-    public List<RawDamageItem> heal { get; set; }
+    public List<RawDamageItem>? damage { get; set; }
+    public List<RawDamageItem>? heal { get; set; }
 }
 
 public abstract class StatusEffectBase<T> where T : struct
@@ -44,6 +46,7 @@ public class TimeprocEffect : StatusEffectBase<TimeprocEffect.Type>
         Unknown,
         DoT,
         HoT,
+        GroundHeal
     }
 }
 public class PotencyEffect : StatusEffectBase<PotencyEffect.Type>
@@ -98,9 +101,9 @@ public class ReactiveProcEffect : StatusEffectBase<ReactiveProcEffect.Type>
         HealOnDamageDealt,
     }
 }
-public class StatuseffectsItem
+public class StatusEffectsItem
 {
-    public int ID => int.TryParse($"0x{info.Key}", NumberStyles.HexNumber, null, out int parsed) ? parsed : -1;
+    public uint ID => uint.TryParse($"{info.Key}", NumberStyles.HexNumber, null, out uint parsed) ? parsed : 0;
     public string Name => info.Value;
     public KeyValuePair<string, string> info { get; set; }
     public TimeprocEffect? timeproc { get; set; }
@@ -110,11 +113,13 @@ public class StatuseffectsItem
     public ReactiveProcEffect? reactiveproc { get; set; }
 }
 
-public class ActJobDefnition
+public class ActJobDefinition
 {
     public string job { get; set; }
     public List<ActionsItem> actions { get; set; }
-    public List<StatuseffectsItem> statuseffects { get; set; }
+    public List<StatusEffectsItem> statuseffects { get; set; }
+    public List<ActionsItem> parsedActions { get; set; }
+    public List<StatusEffectsItem> parsedStatuseffects { get; set; }
 }
 #pragma warning restore IDE1006 // Naming Styles
 #endregion

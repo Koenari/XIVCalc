@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lumina.Excel" Version="6.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XIVCalc\XIVCalc.csproj" />
   </ItemGroup>
 
 </Project>

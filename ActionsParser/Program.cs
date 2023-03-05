@@ -1,128 +1,151 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Lumina;
-using Lumina.Excel;
-using Lumina.Excel.GeneratedSheets;
-using System.Collections.Concurrent;
-using System.Collections.Immutable;
-using System.Globalization;
-using Action = Lumina.Excel.GeneratedSheets.Action;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using XivCalc.ActionsParser.ActDefinitions;
+using XIVCalc.Interfaces;
 
-namespace XivCalc.ActionsParser;
+namespace XIVCalc.ActionsParser;
 
 public class Program
 {
-
-    public static int Main(string[] args)
+    private static readonly string ACTDefBaseURL = "https://raw.githubusercontent.com/ravahn/FFXIV_ACT_Plugin/master/Definitions/";
+    private static readonly List<(string fileName, Job job)> Classes = new List<(string, Job)>()
     {
-        if (args.Length != 1)
+        ("Astrologian",Job.AST),
+        ("Bard",Job.BRD),
+        ("BlackMage",Job.BLM),
+        ("Dancer",Job.DNC),
+        ("DarkKnight",Job.DRK),
+        ("Dragoon", Job.DRG),
+        ("Gunbreaker", Job.GNB),
+        ("Machinist", Job.MCH),
+        ("Monk", Job.MNK),
+        ("Ninja", Job.NIN),
+        ("Paladin", Job.PLD),
+        ("Reaper", Job.RPR),
+        ("RedMage", Job.RDM),
+        ("Sage", Job.SGE),
+        ("Samurai",Job.SAM),
+        ("Scholar", Job.SCH),
+        ("Summoner", Job.SMN),
+        ("Warrior", Job.WAR),
+        ("WhiteMage", Job.WHM)
+    };
+    private static readonly string JsonExt = ".json";
+    public static void Main()
+    {
+        Dictionary<Job, string> actDefinitions = new();
+        Dictionary<Job, List<LuminaGameActionImpl>> actionLookup = new();
+        LoadFiles(actDefinitions);
+        foreach ((_, Job job) in Classes)
         {
-            PrintUsage();
-            return 1;
-        }
-        ConcurrentDictionary<uint, (string name, byte cat, float recast, string potency)> output = new();
-        int errorcount = 0;
-        int emptyCount = 0;
-        int correctCount = 0;
-        try
-        {
-            GameData gdata = new(args[0] + "/game/sqpack");
-            gdata.Options.PanicOnSheetChecksumMismatch = false;
-            ExcelModule Exclemodule = new(gdata);
-            ExcelSheet<Action>? ActionSheet = Exclemodule.GetSheet<Action>();
-            ExcelSheet<ActionTransient>? actionTransients = Exclemodule.GetSheet<ActionTransient>();
-            if (actionTransients is null || ActionSheet is null)
-                throw new NullReferenceException();
-            Console.WriteLine("Sheets loaded");
-
-            Parallel.ForEach<Action>(ActionSheet, (Action a) =>
+            if (!actDefinitions.ContainsKey(job))
             {
-                if (a.ActionCategory.Row < 2 || a.ActionCategory.Row > 4)
-                    return;
-                if (!a.IsPlayerAction)
-                    return;
-                string pot = ParseDescription(actionTransients.GetRow(a.RowId)?.Description.RawString ?? "");
-                output[a.RowId] = (a.Name, (byte)a.ActionCategory.Row, a.Recast100ms / 10f, pot);
-            });
-            using (StreamWriter writer = new StreamWriter("output.cs"))
-            {
-                writer.WriteLine("Dictionary<uint, (byte Category, float Reccast, int Potency)> ActionDB = new();");
-                writer.WriteLine("ActionDB = new()");
-                writer.WriteLine("{");
-                foreach (var item in output.ToImmutableSortedDictionary())
-                {
-                    var (name, cat, recast, potency) = item.Value;
-                    writer.WriteLine("    " + formatOuputLine(item.Key, name, cat, recast, potency));
-                }
-                writer.WriteLine("}");
+                Console.WriteLine($"Job definition for {job} not found");
+                continue;
             }
-            Console.WriteLine($"Complex Potencies:{errorcount}");
-            Console.WriteLine($"Empty Potencies:{emptyCount}");
-            Console.WriteLine($"Correct Potencies:{correctCount}");
+            ActJobDefinition? actDef = ParseJobDefinition(actDefinitions[job]);
+            if (actDef == null) continue;
+            actionLookup[job] = ConvertActions(actDef);
+        }
+        using var writer = new StreamWriter("output" + JsonExt);
+        JsonSerializerSettings settings = new JsonSerializerSettings()
+        {
+            Formatting = Formatting.Indented,
+        };
+        writer.Write(JsonConvert.SerializeObject(actionLookup, settings));
+    }
+    private static List<LuminaGameActionImpl> ConvertActions(ActJobDefinition actDef)
+    {
+        List<LuminaGameActionImpl> result = new();
+        foreach (ActionsItem action in actDef.actions)
+        {
 
-            return 0;
-        }
-        catch (IOException)
-        {
-            Console.WriteLine("Wrong Game Path");
-            return 1;
-        }
-        catch (NullReferenceException)
-        {
-            Console.WriteLine("Lumina error");
-            return 1;
-        }
-        string ParseDescription(string description)
-        {
-            string result = "";
-            int idx = description.IndexOf("potency of");
-            //No potency
-            if (idx == -1)
+            IGameAction.ActionType actionType = IGameAction.ActionType.None;
+            if (action.damage is not null) actionType = IGameAction.ActionType.DAMAGE;
+            if (action.heal is not null) actionType = IGameAction.ActionType.HEAL;
+            if (actionType == IGameAction.ActionType.None)
             {
-                Interlocked.Increment(ref emptyCount);
-                return "0";//$"0/*{description}*/";
+                Console.WriteLine($"Action {action.Name} has no type");
+                continue;
             }
-
-            string pot = description.Substring(idx + 11);
-            //Simple number
-            if (pot[0] >= '0' && pot[0] <= '9')
+            var potencies = actionType == IGameAction.ActionType.DAMAGE ? action.damage : action.heal;
+            if (potencies is null) continue;
+            int comboPot = potencies.FirstOrDefault(p => p.combo > 0)?.combo ?? 0;
+            int aoePot;
+            if (potencies.Any(p => p.targetindex is not null))
             {
+                aoePot = potencies.First(p => p.targetindex is null).potency;
+            }
+            else
+            {
+                aoePot = 0;
+            }
+            int potency = aoePot > 0 ? potencies.First(p => p.targetindex is not null).potency : potencies[0].potency;
+            result.Add(new(
+                action.ID,
+                action.Name,
+                potency,
+                actionType,
+                comboPot,
+                aoePot
+                ));
+        }
+        return result;
+    }
+    private static ActJobDefinition? ParseJobDefinition(string json)
+    {
+        JObject root = JObject.Parse(json);
+        JArray actionsJson = (JArray)root.Property("actions")!.Value;
+        JArray effectsJson = (JArray)root.Property("statuseffects")!.Value;
+        var actDef = JsonConvert.DeserializeObject<ActJobDefinition>(json);
+        if (actDef is null)
+            return null;
+        foreach ((ActionsItem action, JToken curtoken) in actDef.actions.Zip(actionsJson.AsEnumerable()))
+        {
+            if (curtoken is not JObject curAction)
+                continue;
+            JProperty info = (JProperty)curAction.First;
+            action.info = new(info.Name, info.Value.Value<string>());
+        }
+        foreach ((StatusEffectsItem action, JToken curtoken) in actDef.statuseffects.Zip(effectsJson.AsEnumerable()))
+        {
+            if (curtoken is not JObject curAction)
+                continue;
+            JProperty info = (JProperty)curAction.First;
+            action.info = new(info.Name, info.Value.Value<string>());
+        }
+        return actDef;
+    }
+    private static void LoadFiles(Dictionary<Job, string> actDefinitions)
+    {
+        using HttpClient client = new();
+        foreach (var job in Classes)
+        {
+            FileInfo outFile = new("Classes/" + job.fileName + JsonExt);
+            string json = "";
+            if (!outFile.Exists)
+            {
+                json = client.GetStringAsync(ACTDefBaseURL + job.fileName + JsonExt).GetAwaiter().GetResult();
+                using var writer = new StreamWriter(outFile.OpenWrite());
                 try
                 {
-                    char[] ends = new char[] { '.', ' ' };
-                    int idx2 = pot.IndexOfAny(ends);
-                    if (idx2 == -1)
-                        throw new FormatException();
-                    pot = pot.Remove(idx2);
-                    IFormatProvider provider = CultureInfo.CreateSpecificCulture("en-US");
-                    result = $"{int.Parse(pot, NumberStyles.AllowThousands, provider)}";
+                    writer.Write(json);
                 }
-                catch (FormatException)
-                {
-                    result = $"0/*{pot}*/";
-                }
-                Interlocked.Increment(ref correctCount);
-                return result;
+                catch (Exception) { }
             }
-            //Complex Expression
-            //PlayerParameter(68) = ClassJob
-            //PlayerParameter(72) = Level
-
-            result = $"\"{pot}\"";
-            Interlocked.Increment(ref errorcount);
-
-
-
-            return result;
-        }
-
-        void PrintUsage()
-        {
-
-        }
-        string formatOuputLine(uint id, string name, byte category, float recast, string potency)
-        {
-            return $"[{id}] = (\"{name}\", {category}, {recast}f, {potency})";
+            else
+            {
+                using var reader = new StreamReader(outFile.OpenRead());
+                try
+                {
+                    json = reader.ReadToEnd();
+                }
+                catch (Exception) { }
+            }
+            if (json.Length > 0)
+                actDefinitions.Add(job.job, json);
         }
     }
 }
