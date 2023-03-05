@@ -10,7 +10,7 @@
     
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lumina.Excel" Version="6.2.1">
+    <PackageReference Include="Lumina.Excel" Version="6.3.2">
       <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
     </PackageReference>
   </ItemGroup>
