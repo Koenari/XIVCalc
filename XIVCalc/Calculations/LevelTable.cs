@@ -8,7 +8,6 @@ public class LevelTable
     {
         _levelTable = new(new Dictionary<int, (int MP, int MAIN, int SUB, int DIV, int HP, int ELMT, int THREAT)>()
         {
-            [0] = (0, 0, 0, 0, 0, 0, 0),
             [1] = (10000, 20, 56, 56, 86, 52, 2),
             [2] = (10000, 21, 57, 57, 101, 54, 2),
             [3] = (10000, 22, 60, 60, 109, 56, 3),
@@ -101,26 +100,26 @@ public class LevelTable
             [90] = (10000, 390, 400, 1900, 3000, 0, 0)
         });
     }
-    public static int MP(int level) => level > _levelTable.Count ? 0 : _levelTable[level].MP;
-    public static int MAIN(int level) => level > _levelTable.Count ? 0 : _levelTable[level].MAIN;
-    public static int SUB(int level) => level > _levelTable.Count ? 0 : _levelTable[level].SUB;
+    private static bool LevelIsValid(int level) => level >= 1 && level <= _levelTable.Count;
+    public static int MP(int level) => LevelIsValid(level) ? _levelTable[level].MP : 0;
+    public static int MAIN(int level) => LevelIsValid(level) ? _levelTable[level].MAIN : 0;
+    public static int SUB(int level) => LevelIsValid(level) ? _levelTable[level].SUB : 0;
     /// <summary>
     /// The DIV value is returned as double by default to prevent unintentional rounding on division.
     /// See <see cref="IntDIV(int)"/> for integer variant.
     /// </summary>
     /// <param name="level">Level to get Value for.</param>
     /// <returns>DIV value for level</returns>
-    public static double DIV(int level) => level > _levelTable.Count ? 0 : _levelTable[level].DIV;
-    public static int IntDIV(int level) => level > _levelTable.Count ? 0 : _levelTable[level].DIV;
-    public static int HP(int level) => level > _levelTable.Count ? 0 : _levelTable[level].HP;
-    public static int ELMT(int level) => level > _levelTable.Count ? 0 : _levelTable[level].ELMT;
-    public static int THREAT(int level) => level > _levelTable.Count ? 0 : _levelTable[level].THREAT;
+    public static double DIV(int level) => LevelIsValid(level) ? _levelTable[level].DIV : 0;
+    public static int IntDIV(int level) => LevelIsValid(level) ? _levelTable[level].DIV : 0;
+    public static int HP(int level) => LevelIsValid(level) ? _levelTable[level].HP : 0;
+    public static int ELMT(int level) => LevelIsValid(level) ? _levelTable[level].ELMT : 0;
+    public static int THREAT(int level) => LevelIsValid(level) ? _levelTable[level].THREAT : 0;
 
     public static int GetBaseStat(byte type, int level) => GetBaseStat((StatType)type, level);
     public static int GetBaseStat(StatType type, int level)
     {
-        if (level < 1 || level > 90)
-            return 0;
+        if (!LevelIsValid(level)) return 0;
         return type switch
         {
             StatType.HP => LevelTable.HP(level),
