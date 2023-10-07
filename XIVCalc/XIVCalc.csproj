@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/Koenari/XIVCalc</PackageProjectUrl>
-    <PackageId>Koenari.XIVCalc</PackageId>
+    <PackageId>XIVCalc</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Koenari</Authors>
     <Company></Company>
-    <Version>0.1.2</Version>
+    <Version>0.1.3</Version>
     
   </PropertyGroup>
   <PropertyGroup>
