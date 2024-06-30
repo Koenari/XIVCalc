@@ -6,12 +6,14 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Koenari</Authors>
     <Company></Company>
-    <Version>0.1.3</Version>
+    <Version>0.2.0-alpha</Version>
+    <LangVersion>12</LangVersion>
+    <AssemblyVersion>0.2.0</AssemblyVersion>
     
   </PropertyGroup>
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -31,7 +33,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lumina.Excel" Version="6.5.0">
+    <PackageReference Include="Lumina.Excel" Version="7.0.0">
       <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
     </PackageReference>
   </ItemGroup>

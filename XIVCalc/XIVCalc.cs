@@ -39,6 +39,8 @@ public enum Job : byte
     ACN = 26,
     CNJ = 6,
     ROG = 29,
+    VPR = 41,
+    PCT = 42,
 }
 public enum StatType : byte
 {

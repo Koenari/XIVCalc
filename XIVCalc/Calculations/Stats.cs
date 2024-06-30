@@ -58,11 +58,13 @@ public class StatEquations
             //See: https://github.com/Kouzukii/ffxiv-characterstatus-refined/blob/master/CharacterPanelRefined/LevelModifiers.cs
             (true, <= 80) => level + 35,
             (true, <= 90) => (level - 80) * 4.1 + 115,
-            (_, <= 50) => 75,
-            (_, <= 70) => (level - 50) * 2.5 + 75,
-            (_, <= 80) => (level - 70) * 4.0 + 125,
-            (_, <= 90) => (level - 80) * 3.0 + 165,
-            _ => double.NaN,
+            (true, <= 100) => (level - 90) * 3.4 + 156,
+            (_, <= 50)    => 75,
+            (_, <= 70)    => (level - 50) * 2.5 + 75,
+            (_, <= 80)    => (level - 70) * 4.0 + 125,
+            (_, <= 90)    => (level - 80) * 3.0 + 165,
+            (_, <= 100)   => (level - 90) * 4.2 + 195,
+            _             => double.NaN,
         };
     }
 
@@ -127,10 +129,13 @@ public class StatEquations
     /// <returns>A multiplier to calculate HP from Vit</returns>
     public static double GetHPMultiplier(int level, Job job)
     {
-        return job.IsTank() switch
+        return (job.IsTank(), level) switch
         {
             //See: https://github.com/Kouzukii/ffxiv-characterstatus-refined/blob/master/CharacterPanelRefined/LevelModifiers.cs
-            true => 6.7 + 0.31 * level,
+            //ToDO: > 90 is very experimental
+            (false, > 90) => 24.3 + 0.58 * (level - 90),
+            (true, > 90) => 94.9 + 0.82 * (level - 90),
+            (true,_) => 6.7 + 0.31 * level,
             _ => 4.5 + 0.22 * level,
         };
     }
@@ -157,7 +162,7 @@ public class StatEquations
 
     public static double CalcTenacityModifier(int tenacity, int level)
     {
-        return Math.Floor(100 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
+        return Math.Floor(112 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
     }
 
     public static double CalcMPPerSecond(int piety, int level)
@@ -200,14 +205,6 @@ public class StatEquations
         var determinationMultiplier = CalcDeterminationMultiplier(determination, level);
         var tenacityMultiplier = 1d + (job.IsTank() ? CalcTenacityModifier(tenacity, level) : 0d);
         return baseDmg * determinationMultiplier * tenacityMultiplier * trait / 100d;
-    }
-
-    [Obsolete("Use CalcAverageDamagePer100")]
-    public static double CalcAvarageDamageper100(int weaponDamage, int mainStat, int criticalHit, int directHit,
-        int determination, int tenacity, int level, ClassJob job)
-    {
-        return CalcAverageDamagePer100(weaponDamage, mainStat, criticalHit, directHit,
-            determination, tenacity, level, job);
     }
 
     public static double CalcAverageDamagePer100(int weaponDamage, int mainStat, int criticalHit, int directHit,
