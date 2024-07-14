@@ -132,9 +132,10 @@ public class StatEquations
         return (job.IsTank(), level) switch
         {
             //See: https://github.com/Kouzukii/ffxiv-characterstatus-refined/blob/master/CharacterPanelRefined/LevelModifiers.cs
+            // Level 91: 3324 Vit (2929)  : 75894 HP (3255 + 72639) 
             //ToDO: > 90 is very experimental
-            (false, > 90) => 24.3 + 0.58 * (level - 90),
-            (true, > 90) => 94.9 + 0.82 * (level - 90),
+            (false, > 90) => 24.3 + 0.5 * (level - 90),
+            (true, > 90) => 94.9 + 0.7 * (level - 90),
             (true,_) => 6.7 + 0.31 * level,
             _ => 4.5 + 0.22 * level,
         };
