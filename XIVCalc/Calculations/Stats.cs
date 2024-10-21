@@ -182,6 +182,20 @@ public static class StatEquations
         };
     }
 
+    private static double MainStatPowerMod(int level, ClassJob job) => (job.IsTank(), level) switch
+    {
+        (_,< 70)   => 100,
+        (true,< 80)   => 105,
+        (false, < 80) => 125,
+        (true, < 90) => 115,
+        (false,< 90) => 165,
+        (true, < 100) => 156,
+        (false, < 100) => 195,
+        (true, _) => 190,
+        (_,_) => 237,
+
+    };
+    
     public static double CritDamage(int criticalHit, int level) =>
         Floor(1400 + 200 * (criticalHit - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
 
@@ -293,7 +307,7 @@ public static class StatEquations
     /// <param name="job">Active job</param>
     /// <returns>Damage Multiplier F(AP)/F(ATK)</returns>
     public static double MainStatMultiplier(int mainStat, int level, ClassJob job) =>
-        Max(Floor(GetAttackModifierM(level, job) * (mainStat - LevelTable.MAIN(level)/LevelTable.MAIN(level)))/100d,0);
+        Max(0, (Floor(MainStatPowerMod(level,job) * (mainStat - LevelTable.MAIN(level)) / LevelTable.MAIN(level) + 100) / 100f));
 
     /// <summary>
     /// Like <see cref="WeaponDamageMultiplier"/>, but for auto-attacks.

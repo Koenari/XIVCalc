@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XIVCalc", "XIVCalc\XIVCalc.csproj", "{C4D9F54E-983A-45DD-A6E5-F36BF4E54FBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XIVCalc.Tests", "XIVCalc.Tests\XIVCalc.Tests.csproj", "{576C4195-146C-4058-B5E4-3A1F1FD04D24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C4D9F54E-983A-45DD-A6E5-F36BF4E54FBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4D9F54E-983A-45DD-A6E5-F36BF4E54FBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4D9F54E-983A-45DD-A6E5-F36BF4E54FBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{576C4195-146C-4058-B5E4-3A1F1FD04D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{576C4195-146C-4058-B5E4-3A1F1FD04D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{576C4195-146C-4058-B5E4-3A1F1FD04D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{576C4195-146C-4058-B5E4-3A1F1FD04D24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
