@@ -296,7 +296,7 @@ public static class StatEquations
     /// <param name="job">Active job</param>
     /// <returns>Damage Multiplier F(WD)</returns>
     public static double WeaponDamageMultiplier(int weaponDamage, int level, ClassJob job) =>
-        Floor(weaponDamage + LevelTable.MAIN(level) * GetJobModifier((StatType)job.PrimaryStat, job) / 1000d);
+        Floor(weaponDamage + LevelTable.MAIN(level) * GetJobModifier((StatType)job.PrimaryStat, job) / 10d) / 100d;
 
     /// <summary>
     /// Convert a main stat value to a damage multiplier.
