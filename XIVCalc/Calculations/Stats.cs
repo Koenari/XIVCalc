@@ -221,7 +221,7 @@ public static class StatEquations
     
     
     public static double TenacityDefensiveModifier(int tenacity, int level) =>
-        Floor(1000 - 200 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
+        (1000 - Floor(200 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level))) / 1000d;
     
     public static double MpPerTick(int piety, int level) => 
         200d + Floor(150 * (piety - LevelTable.MAIN(level)) / LevelTable.DIV(level));
