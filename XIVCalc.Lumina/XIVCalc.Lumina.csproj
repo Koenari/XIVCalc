@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Lumina.Excel" Version="7.0.0">
+          <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="XIVCalc" Version="0.3.0-alpha2" />
+    </ItemGroup>
+
+</Project>
