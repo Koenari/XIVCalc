@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Lumina.Excel.GeneratedSheets;
 using XIVCalc.Interfaces;
 // ReSharper disable MemberCanBePrivate.Global
 using static System.Math;
@@ -25,7 +24,7 @@ public static class StatEquations
     /// <param name="statType">Which stat is being queried</param>
     /// <param name="job">Current job to evaluate for</param>
     /// <returns>Multiplicative modifier to apply to stat</returns>
-    public static double GetJobModifier(byte statType, ClassJob? job)
+    public static double GetJobModifier(byte statType, IJobModifiers? job)
     {
         return GetJobModifier((StatType)statType, job);
     }
@@ -36,7 +35,7 @@ public static class StatEquations
     /// <param name="statType">Which stat is being queried</param>
     /// <param name="job">Current job to evaluate for</param>
     /// <returns>Multiplicative modifier to apply to stat</returns>
-    public static double GetJobModifier(StatType statType, ClassJob? job)
+    public static double GetJobModifier(StatType statType, IJobModifiers? job)
     {
         if (job is null)
             return 1.0;
@@ -55,9 +54,9 @@ public static class StatEquations
     }
 
     /// <inheritdoc cref="GetAttackModifierM(int,Job)"/>
-    public static double GetAttackModifierM(int level, ClassJob job)
+    public static double GetAttackModifierM(int level, IJobModifiers job)
     {
-        return GetAttackModifierM(level, job.AsJob());
+        return GetAttackModifierM(level, job.Job);
     }
 
     /// <summary>
@@ -83,9 +82,9 @@ public static class StatEquations
         };
     }
 
-    public static double GetAutoAttackStatModifier(ClassJob job)
+    public static double GetAutoAttackStatModifier(IJobModifiers job)
     {
-        var statType = job.AsJob() switch
+        var statType = job.Job switch
         {
             Job.VPR or Job.NIN => StatType.Dexterity,
             Job.BRD or Job.DNC 
@@ -96,9 +95,9 @@ public static class StatEquations
     }
 
     /// <inheritdoc cref="GetTraitModifier(int,Job)"/>
-    public static double GetTraitModifier(int level, ClassJob job)
+    public static double GetTraitModifier(int level, IJobModifiers job)
     {
-        return GetTraitModifier(level, job.AsJob());
+        return GetTraitModifier(level, job.Job);
     }
 
     /// <summary>
@@ -142,7 +141,7 @@ public static class StatEquations
     }
 
     /// <inheritdoc cref="GetHpMultiplier(int,Job)"/>
-    public static double GetHpMultiplier(int level, ClassJob job) => GetHpMultiplier(level, job.AsJob());
+    public static double GetHpMultiplier(int level, IJobModifiers job) => GetHpMultiplier(level, job.Job);
     
 
     /// <summary>
@@ -182,7 +181,7 @@ public static class StatEquations
         };
     }
 
-    private static double MainStatPowerMod(int level, ClassJob job) => (job.IsTank(), level) switch
+    private static double MainStatPowerMod(int level, IJobModifiers job) => (job.IsTank, level) switch
     {
         (_,< 70)   => 100,
         (true,< 80)   => 105,
@@ -227,10 +226,10 @@ public static class StatEquations
         200d + Floor(150 * (piety - LevelTable.MAIN(level)) / LevelTable.DIV(level));
 
     /// <inheritdoc cref="CalcGcd"/>
-    public static double SksToGcd(int sks, int level) => CalcGcd(sks, level);
+    public static double SksToGcd(int sks, int level, int haste = 0) => CalcGcd(sks, level, haste);
     
     /// <inheritdoc cref="CalcGcd"/>
-    public static double SpsToGcd(int sps, int level) => CalcGcd(sps, level);
+    public static double SpsToGcd(int sps, int level, int haste = 0) => CalcGcd(sps, level, haste);
     
     /// <summary>
     /// Calculates effective GCD
@@ -283,7 +282,7 @@ public static class StatEquations
     /// <param name="level">Current level</param>
     /// <param name="job">Active job</param>
     /// <returns>Max HP</returns>
-    public static double Hp(int vitality, int level, ClassJob job) =>
+    public static double Hp(int vitality, int level, IJobModifiers job) =>
         Floor(LevelTable.HP(level) * job.ModifierHitPoints / 100d)
                + Floor((vitality - LevelTable.MAIN(level)) * GetHpMultiplier(level, job));
 
@@ -295,8 +294,8 @@ public static class StatEquations
     /// <param name="level">level</param>
     /// <param name="job">Active job</param>
     /// <returns>Damage Multiplier F(WD)</returns>
-    public static double WeaponDamageMultiplier(int weaponDamage, int level, ClassJob job) =>
-        Floor(weaponDamage + LevelTable.MAIN(level) * GetJobModifier((StatType)job.PrimaryStat, job) / 10d) / 100d;
+    public static double WeaponDamageMultiplier(int weaponDamage, int level, IJobModifiers job) =>
+        Floor(weaponDamage + LevelTable.MAIN(level) * GetJobModifier(job.PrimaryStat, job) / 10d) / 100d;
 
     /// <summary>
     /// Convert a main stat value to a damage multiplier.
@@ -306,7 +305,7 @@ public static class StatEquations
     /// <param name="level">Current level</param>
     /// <param name="job">Active job</param>
     /// <returns>Damage Multiplier F(AP)/F(ATK)</returns>
-    public static double MainStatMultiplier(int mainStat, int level, ClassJob job) =>
+    public static double MainStatMultiplier(int mainStat, int level, IJobModifiers job) =>
         Max(0, (Floor(MainStatPowerMod(level,job) * (mainStat - LevelTable.MAIN(level)) / LevelTable.MAIN(level) + 100) / 100f));
 
     /// <summary>
@@ -318,12 +317,12 @@ public static class StatEquations
     /// <param name="level">Current level</param>
     /// <param name="job"></param>
     /// <returns>Auto-attack damage multiplier f(AUTO)</returns>
-    public static double AutoAttackModifier(int weaponDamage, int weaponDelay, int level, ClassJob job) =>
+    public static double AutoAttackModifier(int weaponDamage, int weaponDelay, int level, IJobModifiers job) =>
         Floor(Floor(weaponDamage + LevelTable.MAIN(level)* GetAutoAttackStatModifier(job)/1000d)*(weaponDelay *1000/3d))/1000d;
 
-    private static bool UsesCasterDamageFormula(ClassJob job, AttackType attackType = AttackType.Unknown)
+    private static bool UsesCasterDamageFormula(IJobModifiers job, AttackType attackType = AttackType.Unknown)
     {
-        return job.IsCaster() && attackType != AttackType.AutoAttack;
+        return job.IsCaster && attackType != AttackType.AutoAttack;
     }
     
     /// <summary>
@@ -342,8 +341,8 @@ public static class StatEquations
                                     bool isDot = false)
     {
         double spdMulti;
-        bool isAA = attackType == AttackType.AutoAttack;
-        if (isAA) {
+        var isAa = attackType == AttackType.AutoAttack;
+        if (isAa) {
             spdMulti = SksTickMultiplier(stats.SkillSpeed,stats.Level);
         }
         else if (isDot) {
@@ -411,7 +410,7 @@ public static class StatEquations
         var critDmgMod = CritDamage(stats.CriticalHit, stats.Level);
         var dhDmgMod = DirectHitDamage(stats.DirectHit, stats.Level);
         return baseDmg * (1 + (dhDmgMod - 1) * dhRate) * (1 + (1 - critDmgMod) * critRate)
-             / (stats.Job.IsCaster()
+             / (stats.Job.IsCaster
                    ? SpsToGcd(stats.SpellSpeed, stats.Level)
                    : SksToGcd(stats.SkillSpeed, stats.Level));
     }
@@ -420,7 +419,7 @@ public static class StatEquations
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public interface IStatEquations
 {
-    /// <inheritdoc cref="StatEquations.GetJobModifier(StatType,ClassJob?)"/>
+    /// <inheritdoc cref="StatEquations.GetJobModifier(StatType,IJobModifiers?)"/>
     public double GetJobModifier(StatType statType);
 
     /// <inheritdoc cref="StatEquations.GetAttackModifierM(int,Job)"/>
@@ -522,7 +521,7 @@ public class StatBlockEquations(IJobStatBlock statBlock) : IStatEquations
 
     /// <inheritdoc/>
     public double GetAttackModifierM() =>
-        StatEquations.GetAttackModifierM(statBlock.Level, statBlock.Job.AsJob());
+        StatEquations.GetAttackModifierM(statBlock.Level, statBlock.Job);
     
     /// <inheritdoc/>
     public double GetAutoAttackStatModifier() =>
@@ -530,11 +529,11 @@ public class StatBlockEquations(IJobStatBlock statBlock) : IStatEquations
 
     /// <inheritdoc/>
     public double GetTraitModifier()
-        => StatEquations.GetTraitModifier(statBlock.Level, statBlock.Job.AsJob());
+        => StatEquations.GetTraitModifier(statBlock.Level, statBlock.Job);
     
     /// <inheritdoc/>
     public double GetHpMultiplier() =>
-        StatEquations.GetHpMultiplier(statBlock.Level, statBlock.Job.AsJob());
+        StatEquations.GetHpMultiplier(statBlock.Level, statBlock.Job);
 
     /// <inheritdoc/>
     public double CritDamage() =>
@@ -574,19 +573,19 @@ public class StatBlockEquations(IJobStatBlock statBlock) : IStatEquations
 
     /// <inheritdoc/>
     public double Gcd() =>
-        statBlock.Job.IsCaster()
+        statBlock.Job.IsCaster
             ? StatEquations.SpsToGcd(statBlock.SpellSpeed, statBlock.Level)
             : StatEquations.SksToGcd(statBlock.SkillSpeed, statBlock.Level);
 
     /// <inheritdoc/>
     public double DotMultiplier() => 
-        statBlock.Job.IsCaster()
+        statBlock.Job.IsCaster
             ? StatEquations.DotMultiplier(statBlock.SpellSpeed, statBlock.Level)
             : StatEquations.DotMultiplier(statBlock.SkillSpeed, statBlock.Level);
     
     /// <inheritdoc/>
     public double HotMultiplier() => 
-        statBlock.Job.IsCaster()
+        statBlock.Job.IsCaster
             ? StatEquations.HotMultiplier(statBlock.SpellSpeed, statBlock.Level)
             : StatEquations.HotMultiplier(statBlock.SkillSpeed, statBlock.Level);
 

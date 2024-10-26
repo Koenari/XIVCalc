@@ -31,12 +31,6 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Lumina.Excel" Version="7.0.0">
-      <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\"></None>
   </ItemGroup>

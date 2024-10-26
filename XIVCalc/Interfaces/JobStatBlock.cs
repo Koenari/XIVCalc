@@ -1,17 +1,15 @@
-﻿using Lumina.Excel.GeneratedSheets;
-
-namespace XIVCalc.Interfaces;
+﻿namespace XIVCalc.Interfaces;
 
 public interface IJobStatBlock
 {
-    public ClassJob Job { get; }
+    public IJobModifiers Job { get; }
     public int Level { get; }
 
     //Weapon stats
     public int WeaponDamage { get; }
     public int WeaponDelay { get; }
 
-    public int MainStat => (StatType)Job.PrimaryStat switch
+    public int MainStat => Job.PrimaryStat switch
     {
         StatType.Strength => Strength,
         StatType.Dexterity => Dexterity,

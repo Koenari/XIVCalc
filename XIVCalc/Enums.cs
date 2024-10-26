@@ -1,12 +1,15 @@
 ﻿namespace XIVCalc;
-internal class XIVCalc
+
+public enum Role
 {
-
-    public static void Init()
-    {
-    }
-
+    None,
+    Tank,
+    Heal,
+    Melee,
+    PhysicalRanged,
+    MagicalRanged
 }
+
 public enum Job : byte
 {
     ADV = 0,
@@ -120,4 +123,27 @@ public enum StatType : byte
     Perception,
     Unknown73,
     Count,
+}
+public static class EnumExtensions
+{
+    public static bool IsTank(this Job job)
+    {
+        return job is Job.DRK or Job.GNB or Job.PLD or Job.WAR or Job.GLA or Job.MRD;
+    }
+
+    public static bool IsPhysicalRanged(this Job job)
+    {
+        return job is Job.BRD or Job.DNC or Job.MCH or Job.ARC;
+    }
+
+    public static bool IsMelee(this Job job)
+    {
+        return job is Job.DRG or Job.MNK or Job.NIN or Job.RPR or Job.SAM or Job.LNC or Job.PGL or Job.ROG or Job.VPR;
+    }
+
+    public static bool IsCaster(this Job job)
+    {
+        return job is Job.AST or Job.SCH or Job.SGE or Job.WHM or Job.CNJ or Job.BLM or Job.BLU or Job.RDM or Job.SMN
+                   or Job.THM or Job.ACN or Job.PCT;
+    }
 }
