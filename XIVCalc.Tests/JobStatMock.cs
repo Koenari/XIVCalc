@@ -3,9 +3,27 @@ using XIVCalc.Interfaces;
 
 namespace XIVCalc.Tests;
 
+public class JobModMock : IJobModifiers{
+    public Job Job { get; set; }
+    public int ModifierHitPoints { get; set; }
+    public int ModifierManaPoints { get; set; }
+    public int ModifierStrength { get; set; }
+    public int ModifierVitality { get; set; }
+    public int ModifierDexterity { get; set; }
+    public int ModifierIntelligence { get; set; }
+    public int ModifierMind { get; set; }
+    public int ModifierPiety { get; set; }
+    public bool IsTank { get; set; }
+    public StatType PrimaryStat { get; set; }
+    public bool IsDoL { get; set; }
+    public bool IsDoH { get; set; }
+    public bool IsDoW { get; set; }
+    public bool IsCaster { get; set; }
+}
+
 public class JobStatMock : IJobStatBlock
 {
-    public ClassJob Job { get; init; } = new ClassJob();
+    public IJobModifiers Job { get; init; } = new JobModMock();
     public int Level { get; init; }
     public int WeaponDamage { get;init; }
     public int WeaponDelay { get; init;}
