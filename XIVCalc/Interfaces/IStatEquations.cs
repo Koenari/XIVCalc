@@ -32,7 +32,7 @@ public interface IStatEquations
     /// <inheritdoc cref="StatEquations.DirectHitChance"/>
     public double DirectHitChance();
 
-    /// <inheritdoc cref="StatEquations.DirectHitDamage"/>
+    /// <inheritdoc cref="StatEquations.DirectHitDamage(int,int)"/>
     public double DirectHitDamage();
 
     /// <inheritdoc cref="StatEquations.AutoDirectHitMultiplier"/>

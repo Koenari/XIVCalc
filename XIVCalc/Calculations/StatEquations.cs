@@ -166,13 +166,31 @@ public static class StatEquations
 
     };
     
+    /// <summary>
+    /// Damage modifier for a critical hit
+    /// </summary>
+    /// <param name="criticalHit">Value of critical hit stat</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Damage modifier</returns>
     public static double CritDamage(int criticalHit, int level) =>
         Floor(1400 + 200 * (criticalHit - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
 
+    /// <summary>
+    /// Chance to land a critical hit
+    /// </summary>
+    /// <param name="criticalHit">Value of critical hit stat</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Crit chance</returns>
     public static double CritChance(int criticalHit, int level) => 
         Floor(50 + 200 * (criticalHit - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
     
 
+    /// <summary>
+    /// Chance to land a direct hit
+    /// </summary>
+    /// <param name="directHit">Value of direct hit stat</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Dh chance</returns>
     public static double DirectHitChance(int directHit, int level) => 
         Floor(550 * (directHit - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
 
@@ -186,19 +204,48 @@ public static class StatEquations
     
     private static double DirectHitDamage() => DhDmg;
 
+    /// <summary>
+    /// Damage multiplier for skill that automatically direct hit
+    /// </summary>
+    /// <param name="directHit">Current Direct Hit value</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Dmg multiplier</returns>
     public static double AutoDirectHitMultiplier(int directHit, int level) =>
         Floor(1000 + 140 * ((directHit - LevelTable.SUB(level))/LevelTable.DIV(level))) / 1000d;
 
+    /// <summary>
+    /// Damage multiplier affected by determination
+    /// </summary>
+    /// <param name="determination">Current det value</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Dmg multiplier</returns>
     public static double DeterminationMultiplier(int determination, int level) =>
         Floor(1000 + 140 * (determination - LevelTable.MAIN(level)) / LevelTable.DIV(level)) / 1000d;
 
+    /// <summary>
+    /// Damage multiplier affected by tenacity
+    /// </summary>
+    /// <param name="tenacity">Current tenacity value</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Dmg multiplier</returns>
     public static double TenacityOffensiveModifier(int tenacity, int level) =>
         Floor(1000 + 112 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
     
-    
+    /// <summary>
+    /// Incoming damage multiplier affected by tenacity
+    /// </summary>
+    /// <param name="tenacity">Current tenacity value</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Incoming damage multiplier</returns>
     public static double TenacityDefensiveModifier(int tenacity, int level) =>
         (1000 - Floor(200 * (tenacity - LevelTable.SUB(level)) / LevelTable.DIV(level))) / 1000d;
     
+    /// <summary>
+    /// MP gained per tick
+    /// </summary>
+    /// <param name="piety">Current piety value</param>
+    /// <param name="level">Current level</param>
+    /// <returns>MP/t</returns>
     public static double MpPerTick(int piety, int level) => 
         200d + Floor(150 * (piety - LevelTable.MAIN(level)) / LevelTable.DIV(level));
 

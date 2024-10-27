@@ -2,6 +2,9 @@
 // ReSharper disable InconsistentNaming
 
 namespace XIVCalc.Calculations;
+/// <summary>
+/// Static Values that are tied to job level
+/// </summary>
 public static class LevelTable
 {
     private static readonly ReadOnlyDictionary<int, (int MP, int MAIN, int SUB, int DIV, int HP, int ELMT, int THREAT)> _levelTable = 
@@ -109,10 +112,30 @@ public static class LevelTable
         [100] = (10000, 440, 420, 2780, 4000, 0, 0),
     });
     private static bool LevelIsValid(int level) => level >= 1 && level <= _levelTable.Count;
+    /// <summary>
+    /// MP
+    /// </summary>
+    /// <param name="level">Current level</param>
+    /// <returns>MP</returns>
     public static int MP(int level) => LevelIsValid(level) ? _levelTable[level].MP : 0;
+    /// <inheritdoc cref="IntMAIN"/>
     public static double MAIN(int level) => IntMAIN(level);
+    /// <summary>
+    /// Main stat base value
+    /// </summary>
+    /// <param name="level">Current level</param>
+    /// <returns>Main</returns>
     public static int IntMAIN(int level) => LevelIsValid(level) ? _levelTable[level].MAIN : 0;
-    public static int SUB(int level) => LevelIsValid(level) ? _levelTable[level].SUB : 0;
+    
+    /// <inheritdoc cref="IntSUB"/>
+    public static double SUB(int level) => IntSUB(level);
+    
+    /// <summary>
+    /// Sub stat base value
+    /// </summary>
+    /// <param name="level">Current level</param>
+    /// <returns>Sub</returns>
+    public static int IntSUB(int level) => LevelIsValid(level) ? _levelTable[level].SUB : 0;
     /// <summary>
     /// The DIV value is returned as double by default to prevent unintentional rounding on division.
     /// See <see cref="IntDIV(int)"/> for integer variant.
@@ -120,23 +143,31 @@ public static class LevelTable
     /// <param name="level">Level to get Value for.</param>
     /// <returns>DIV value for level</returns>
     public static double DIV(int level) => IntDIV(level);
+    /// <summary>
+    /// Divider value for this level
+    /// </summary>
+    /// <param name="level">Current level</param>
+    /// <returns>Div</returns>
     public static int IntDIV(int level) => LevelIsValid(level) ? _levelTable[level].DIV : 0;
+    
+    /// <summary>
+    /// HP base value
+    /// </summary>
+    /// <param name="level">Current level</param>
+    /// <returns>HP</returns>
     public static int HP(int level) => LevelIsValid(level) ? _levelTable[level].HP : 0;
+    
+    /// <summary>
+    /// Elemental def base
+    /// </summary>
+    /// <param name="level">Current level</param>
+    /// <returns>Elmt</returns>
     public static int ELMT(int level) => LevelIsValid(level) ? _levelTable[level].ELMT : 0;
+    
+    /// <summary>
+    /// Threat
+    /// </summary>
+    /// <param name="level">Current level</param>
+    /// <returns>Threat</returns>
     public static int THREAT(int level) => LevelIsValid(level) ? _levelTable[level].THREAT : 0;
-
-    public static int GetBaseStat(byte type, int level) => GetBaseStat((StatType)type, level);
-    // ReSharper disable once MemberCanBePrivate.Global
-    public static int GetBaseStat(StatType type, int level)
-    {
-        if (!LevelIsValid(level)) return 0;
-        return type switch
-        {
-            StatType.HP => HP(level),
-            StatType.MP => MP(level),
-            StatType.Strength or StatType.Dexterity or StatType.Vitality or StatType.Intelligence or StatType.Mind or StatType.Determination or StatType.Piety => IntMAIN(level),
-            StatType.Tenacity or StatType.DirectHitRate or StatType.CriticalHit or StatType.CriticalHitPower or StatType.SkillSpeed or StatType.SpellSpeed => SUB(level),
-            _ => 0
-        };
-    }
 }
