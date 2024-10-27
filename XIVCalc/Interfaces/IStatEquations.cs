@@ -67,7 +67,7 @@ public interface IStatEquations
     /// <inheritdoc cref="StatEquations.DefenseMitigation"/>
     public double MagicalDefenseMitigation();
     
-    /// <inheritdoc cref="StatEquations.Hp"/>
+    /// <inheritdoc cref="StatEquations.MaxHp"/>
     public double MaxHp();
 
     /// <summary>

@@ -312,7 +312,7 @@ public static class StatEquations
     /// <param name="level">Current level</param>
     /// <param name="jobMod">Active job</param>
     /// <returns>Max HP</returns>
-    public static double Hp(int vitality, int level, IJobModifiers jobMod) =>
+    public static double MaxHp(int vitality, int level, IJobModifiers jobMod) =>
         Floor(LevelTable.HP(level) * jobMod.HitPoints / 100d)
                + Floor((vitality - LevelTable.MAIN(level)) * GetHpMultiplier(level, jobMod.Job));
 

@@ -89,7 +89,7 @@ public class StatBlockEquations(IJobStatBlock statBlock) : IStatEquations
 
     /// <inheritdoc/>
     public double MaxHp() =>
-        StatEquations.Hp(statBlock.Vitality, statBlock.Level, statBlock.JobModifiers);
+        StatEquations.MaxHp(statBlock.Vitality, statBlock.Level, statBlock.JobModifiers);
 
     /// <inheritdoc/>
     public double WeaponDamageMultiplier() =>
