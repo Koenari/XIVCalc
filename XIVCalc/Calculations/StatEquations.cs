@@ -1,34 +1,16 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using XIVCalc.Interfaces;
-// ReSharper disable MemberCanBePrivate.Global
+﻿using XIVCalc.Interfaces;
 using static System.Math;
 
 namespace XIVCalc.Calculations;
 
-public enum AttackType
-{
-    Unknown,
-    Weaponskill,
-    AutoAttack
-}
-
+/// <summary>
+/// Collection of FFXIV equations
+/// </summary>
 public static class StatEquations
 {
 
-    public const double BASE_GCD = 2.5;
-    public const double DH_DMG = 1.25;
-    
-    /// <summary>
-    /// Calculates a multiplicative modifier based on the Job/class
-    /// </summary>
-    /// <param name="statType">Which stat is being queried</param>
-    /// <param name="job">Current job to evaluate for</param>
-    /// <returns>Multiplicative modifier to apply to stat</returns>
-    public static double GetJobModifier(byte statType, IJobModifiers? job)
-    {
-        return GetJobModifier((StatType)statType, job);
-    }
-
+    private const double BaseGcd = 2.5;
+    private const double DhDmg = 1.25;
     /// <summary>
     /// Calculates a multiplicative modifier based on the Job/class
     /// </summary>
@@ -41,22 +23,16 @@ public static class StatEquations
             return 1.0;
         return statType switch
         {
-            StatType.Strength => job.ModifierStrength,
-            StatType.Dexterity => job.ModifierDexterity,
-            StatType.Intelligence => job.ModifierIntelligence,
-            StatType.Mind => job.ModifierMind,
-            StatType.Vitality => job.ModifierVitality,
-            StatType.HP => job.ModifierHitPoints,
-            StatType.MP => job.ModifierManaPoints,
-            StatType.Piety => job.ModifierPiety,
+            StatType.Strength => job.Strength,
+            StatType.Dexterity => job.Dexterity,
+            StatType.Intelligence => job.Intelligence,
+            StatType.Mind => job.Mind,
+            StatType.Vitality => job.Vitality,
+            StatType.HP => job.HitPoints,
+            StatType.MP => job.ManaPoints,
+            StatType.Piety => job.Piety,
             _ => 100,
         } / 100f;
-    }
-
-    /// <inheritdoc cref="GetAttackModifierM(int,Job)"/>
-    public static double GetAttackModifierM(int level, IJobModifiers job)
-    {
-        return GetAttackModifierM(level, job.Job);
     }
 
     /// <summary>
@@ -82,6 +58,11 @@ public static class StatEquations
         };
     }
 
+    /// <summary>
+    /// Modifier for auto attacks 
+    /// </summary>
+    /// <param name="job"></param>
+    /// <returns></returns>
     public static double GetAutoAttackStatModifier(IJobModifiers job)
     {
         var statType = job.Job switch
@@ -92,12 +73,6 @@ public static class StatEquations
             _                  => StatType.Strength,
         };
         return GetJobModifier(statType, job);
-    }
-
-    /// <inheritdoc cref="GetTraitModifier(int,Job)"/>
-    public static double GetTraitModifier(int level, IJobModifiers job)
-    {
-        return GetTraitModifier(level, job.Job);
     }
 
     /// <summary>
@@ -139,11 +114,7 @@ public static class StatEquations
             },
         };
     }
-
-    /// <inheritdoc cref="GetHpMultiplier(int,Job)"/>
-    public static double GetHpMultiplier(int level, IJobModifiers job) => GetHpMultiplier(level, job.Job);
     
-
     /// <summary>
     /// Calculates the Hp multiplier (also called ??). Basically SE's way to balance Vitality to actual HP
     /// Currently depends on level and if you are tank or not
@@ -181,7 +152,7 @@ public static class StatEquations
         };
     }
 
-    private static double MainStatPowerMod(int level, IJobModifiers job) => (job.IsTank, level) switch
+    private static double MainStatPowerMod(int level, IJobModifiers job) => (job.Job.IsTank(), level) switch
     {
         (_,< 70)   => 100,
         (true,< 80)   => 105,
@@ -205,9 +176,15 @@ public static class StatEquations
     public static double DirectHitChance(int directHit, int level) => 
         Floor(550 * (directHit - LevelTable.SUB(level)) / LevelTable.DIV(level)) / 1000d;
 
+    /// <summary>
+    /// Calculates direct hit damage multiplier
+    /// </summary>
+    /// <param name="directHit">Current Direct Hit value</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Damage multiplier</returns>
     public static double DirectHitDamage(int directHit, int level) => DirectHitDamage();
     
-    private static double DirectHitDamage() => DH_DMG;
+    private static double DirectHitDamage() => DhDmg;
 
     public static double AutoDirectHitMultiplier(int directHit, int level) =>
         Floor(1000 + 140 * ((directHit - LevelTable.SUB(level))/LevelTable.DIV(level))) / 1000d;
@@ -242,7 +219,7 @@ public static class StatEquations
     {
         return Floor(
                    Floor(
-                       BASE_GCD * 
+                       BaseGcd * 
                        (1000 - Floor(130 * (speed -LevelTable.SUB(level)) / LevelTable.DIV(level)))
                        ) * (100-haste) / 1000d
                    )
@@ -272,6 +249,12 @@ public static class StatEquations
     public static double TickMultiplier(int speed, int level) =>
         (1000d + Floor(130d * (speed - LevelTable.SUB(level)) / LevelTable.DIV(level))) / 1000d;
 
+    /// <summary>
+    /// Calculates how much incoming damage ist mitigated
+    /// </summary>
+    /// <param name="defense">Value of defense corresponding to damage type</param>
+    /// <param name="level">Current level</param>
+    /// <returns>Fraction of damage mitigated</returns>s
     public static double DefenseMitigation(int defense, int level) =>
         Floor(15 * defense / LevelTable.DIV(level)) / 100d;
 
@@ -280,11 +263,11 @@ public static class StatEquations
     /// </summary>
     /// <param name="vitality">Vitality value</param>
     /// <param name="level">Current level</param>
-    /// <param name="job">Active job</param>
+    /// <param name="jobMod">Active job</param>
     /// <returns>Max HP</returns>
-    public static double Hp(int vitality, int level, IJobModifiers job) =>
-        Floor(LevelTable.HP(level) * job.ModifierHitPoints / 100d)
-               + Floor((vitality - LevelTable.MAIN(level)) * GetHpMultiplier(level, job));
+    public static double Hp(int vitality, int level, IJobModifiers jobMod) =>
+        Floor(LevelTable.HP(level) * jobMod.HitPoints / 100d)
+               + Floor((vitality - LevelTable.MAIN(level)) * GetHpMultiplier(level, jobMod.Job));
 
     /// <summary>
     /// Convert a Weapon Damage value to a damage multiplier.
@@ -322,7 +305,7 @@ public static class StatEquations
 
     private static bool UsesCasterDamageFormula(IJobModifiers job, AttackType attackType = AttackType.Unknown)
     {
-        return job.IsCaster && attackType != AttackType.AutoAttack;
+        return job.Job.IsCaster() && attackType != AttackType.AutoAttack;
     }
     
     /// <summary>
@@ -346,7 +329,7 @@ public static class StatEquations
             spdMulti = SksTickMultiplier(stats.SkillSpeed,stats.Level);
         }
         else if (isDot) {
-            spdMulti = (attackType == AttackType.Weaponskill)
+            spdMulti = (attackType == AttackType.WeaponSkill)
                 ? SksTickMultiplier(stats.SkillSpeed, stats.Level)
                 : SpsTickMultiplier(stats.SpellSpeed, stats.Level);
         }
@@ -354,8 +337,8 @@ public static class StatEquations
             spdMulti = 1.0;
         }
         
-        var mainStatMulti = MainStatMultiplier(stats.MainStat, stats.Level, stats.Job);
-        var wdMulti = WeaponDamageMultiplier(stats.WeaponDamage, stats.Level, stats.Job);
+        var mainStatMulti = MainStatMultiplier(stats.MainStat, stats.Level, stats.JobModifiers);
+        var wdMulti = WeaponDamageMultiplier(stats.WeaponDamage, stats.Level, stats.JobModifiers);
         var critMulti = CritDamage(stats.CriticalHit, stats.Level);
         var critRate = CritChance(stats.CriticalHit, stats.Level);
         var dhRate = DirectHitChance(stats.DirectHit, stats.Level);
@@ -363,11 +346,11 @@ public static class StatEquations
         var detMulti = DeterminationMultiplier(stats.Determination, stats.Level);
         var tncMulti = TenacityOffensiveModifier(stats.Tenacity, stats.Level);
         var detAutoDhMulti = detMulti + AutoDirectHitMultiplier(stats.DirectHit, stats.Level);
-        var traitMulti = GetTraitModifier(stats.Level, stats.Job);
+        var traitMulti = GetTraitModifier(stats.Level, stats.JobModifiers.Job);
         var effectiveDetMulti = isAutoDh ? detAutoDhMulti : detMulti;
 
         double stage1Potency;
-        if (UsesCasterDamageFormula(stats.Job, attackType)) {
+        if (UsesCasterDamageFormula(stats.JobModifiers, attackType)) {
             // https://github.com/Amarantine-xiv/Amas-FF14-Combat-Sim_source/blob/main/ama_xiv_combat_sim/simulator/calcs/compute_damage_utils.py#L130
             var apDet = Floor(100* mainStatMulti * effectiveDetMulti)/100;
             var basePotency = Floor(apDet * Floor(100 * wdMulti * potency)/100);
@@ -402,224 +385,16 @@ public static class StatEquations
     /// <param name="potency">Potency of the skill</param>
     /// <param name="stats">Statblock</param>
     /// <returns>"DPS"</returns>
-    public static double AverageSkillDamagePerSecond(int potency,IJobStatBlock stats)
+    public static double AverageSkillDamage(int potency,IJobStatBlock stats)
     {
         var baseDmg = BaseDamage(potency,stats);
         var critRate = CritChance(stats.CriticalHit, stats.Level);
         var dhRate = DirectHitChance(stats.DirectHit, stats.Level);
         var critDmgMod = CritDamage(stats.CriticalHit, stats.Level);
         var dhDmgMod = DirectHitDamage(stats.DirectHit, stats.Level);
-        return baseDmg * (1 + (dhDmgMod - 1) * dhRate) * (1 + (1 - critDmgMod) * critRate)
-             / (stats.Job.IsCaster
-                   ? SpsToGcd(stats.SpellSpeed, stats.Level)
-                   : SksToGcd(stats.SkillSpeed, stats.Level));
+        return baseDmg * (1 + (dhDmgMod - 1) * dhRate) * (1 + (1 - critDmgMod) * critRate);
     }
 }
 
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
-public interface IStatEquations
-{
-    /// <inheritdoc cref="StatEquations.GetJobModifier(StatType,IJobModifiers?)"/>
-    public double GetJobModifier(StatType statType);
-
-    /// <inheritdoc cref="StatEquations.GetAttackModifierM(int,Job)"/>
-    public double GetAttackModifierM();
-
-    /// <inheritdoc cref="StatEquations.GetAutoAttackStatModifier"/>
-    public double GetAutoAttackStatModifier();
-
-    /// <inheritdoc cref="StatEquations.GetTraitModifier(int,Job)"/>
-    public double GetTraitModifier();
-
-    /// <inheritdoc cref="StatEquations.GetHpMultiplier(int,Job)"/>
-    public double GetHpMultiplier();
-
-    /// <inheritdoc cref="StatEquations.CritDamage"/>
-    public double CritDamage();
-
-    /// <inheritdoc cref="StatEquations.CritChance"/>
-    public double CritChance();
-
-    /// <inheritdoc cref="StatEquations.DirectHitChance"/>
-    public double DirectHitChance();
-
-    /// <inheritdoc cref="StatEquations.DirectHitDamage"/>
-    public double DirectHitDamage();
-
-    /// <inheritdoc cref="StatEquations.AutoDirectHitMultiplier"/>
-    public double AutoDirectHitMultiplier();
-
-    public double DeterminationMultiplier();
-
-    public double TenacityOffensiveModifier();
-    
-    
-    public double TenacityDefensiveModifier();
-    
-    public double MpPerTick();
-
-    /// <inheritdoc cref="StatEquations.CalcGcd"/>
-    public double Gcd();
 
 
-    /// <inheritdoc cref="StatEquations.TickMultiplier"/>
-    public double DotMultiplier();
-
-    /// <inheritdoc cref="StatEquations.TickMultiplier"/>
-    public double HotMultiplier();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public double PhysicalDefenseMitigation();
-
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public double MagicalDefenseMitigation();
-    
-    /// <summary>
-    /// Calculates max hit points
-    /// </summary>
-    /// <returns>Max HP</returns>
-    public double MaxHp();
-
-    /// <summary>
-    /// Convert a Weapon Damage value to a damage multiplier.
-    /// AkhMorning equivalent: F(WD)
-    /// </summary>
-    /// <returns>Damage Multiplier F(WD)</returns>
-    public double WeaponDamageMultiplier();
-
-    /// <summary>
-    /// AkhMorning equivalent: F(AP) or F(ATK)
-    /// </summary>
-    /// <returns>Damage Multiplier F(AP)/F(ATK)</returns>
-    public double MainStatMultiplier();
-
-    public double AutoAttackModifier();
-
-    public double BaseDamage(int potency);
-
-    /// <summary>
-    /// Calculates DPS if skill of given potency is repeated every GCD 
-    /// </summary>
-    /// <param name="potency">Potency of the skill</param>
-    /// <returns>"DPS"</returns>
-    public double AverageSkillDamagePerSecond(int potency);
-}
-
-/// <inheritdoc />
-public class StatBlockEquations(IJobStatBlock statBlock) : IStatEquations
-{
-    /// <inheritdoc/>
-    public double GetJobModifier(StatType statType) =>
-        StatEquations.GetJobModifier(statType, statBlock.Job);
-
-    /// <inheritdoc/>
-    public double GetAttackModifierM() =>
-        StatEquations.GetAttackModifierM(statBlock.Level, statBlock.Job);
-    
-    /// <inheritdoc/>
-    public double GetAutoAttackStatModifier() =>
-        StatEquations.GetAutoAttackStatModifier(statBlock.Job);
-
-    /// <inheritdoc/>
-    public double GetTraitModifier()
-        => StatEquations.GetTraitModifier(statBlock.Level, statBlock.Job);
-    
-    /// <inheritdoc/>
-    public double GetHpMultiplier() =>
-        StatEquations.GetHpMultiplier(statBlock.Level, statBlock.Job);
-
-    /// <inheritdoc/>
-    public double CritDamage() =>
-        StatEquations.CritDamage(statBlock.CriticalHit, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double CritChance() =>
-        StatEquations.CritChance(statBlock.CriticalHit, statBlock.Level);
-    
-    /// <inheritdoc/>
-    public double DirectHitChance() =>
-        StatEquations.DirectHitChance(statBlock.DirectHit, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double DirectHitDamage() => 
-        StatEquations.DirectHitDamage(statBlock.DirectHit, statBlock.Level);
-
-    /// <inheritdoc />
-    public double AutoDirectHitMultiplier() =>
-        StatEquations.AutoDirectHitMultiplier(statBlock.DirectHit, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double DeterminationMultiplier() =>
-        StatEquations.DeterminationMultiplier(statBlock.Determination, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double TenacityOffensiveModifier() =>
-        StatEquations.TenacityOffensiveModifier(statBlock.Tenacity, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double TenacityDefensiveModifier() =>
-        StatEquations.TenacityDefensiveModifier(statBlock.Tenacity, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double MpPerTick() =>
-        StatEquations.MpPerTick(statBlock.Piety, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double Gcd() =>
-        statBlock.Job.IsCaster
-            ? StatEquations.SpsToGcd(statBlock.SpellSpeed, statBlock.Level)
-            : StatEquations.SksToGcd(statBlock.SkillSpeed, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double DotMultiplier() => 
-        statBlock.Job.IsCaster
-            ? StatEquations.DotMultiplier(statBlock.SpellSpeed, statBlock.Level)
-            : StatEquations.DotMultiplier(statBlock.SkillSpeed, statBlock.Level);
-    
-    /// <inheritdoc/>
-    public double HotMultiplier() => 
-        statBlock.Job.IsCaster
-            ? StatEquations.HotMultiplier(statBlock.SpellSpeed, statBlock.Level)
-            : StatEquations.HotMultiplier(statBlock.SkillSpeed, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double PhysicalDefenseMitigation() =>
-        StatEquations.DefenseMitigation(statBlock.PhysicalDefense, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double MagicalDefenseMitigation() =>
-        StatEquations.DefenseMitigation(statBlock.MagicalDefense, statBlock.Level);
-
-    /// <inheritdoc/>
-    public double MaxHp() =>
-        StatEquations.Hp(statBlock.Vitality, statBlock.Level, statBlock.Job);
-
-    /// <inheritdoc/>
-    public double WeaponDamageMultiplier() =>
-        StatEquations.WeaponDamageMultiplier(statBlock.WeaponDamage, statBlock.Level,
-                                             statBlock.Job);
-
-    /// <inheritdoc/>
-    public double MainStatMultiplier() =>
-        StatEquations.MainStatMultiplier(statBlock.MainStat, statBlock.Level, statBlock.Job);
-
-    //// <inheritdoc/>
-    public double AutoAttackModifier() =>
-        StatEquations.AutoAttackModifier(statBlock.WeaponDamage, statBlock.WeaponDelay,
-                                         statBlock.Level, statBlock.Job);
-
-    /// <inheritdoc/>
-    public double BaseDamage(int potency) =>
-        StatEquations.BaseDamage(potency, statBlock);
-
-    /// <inheritdoc/>
-    public double AverageSkillDamagePerSecond(int potency) =>
-        StatEquations.AverageSkillDamagePerSecond(potency, statBlock);
-}

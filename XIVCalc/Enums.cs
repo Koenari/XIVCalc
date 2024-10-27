@@ -1,50 +1,147 @@
-﻿namespace XIVCalc;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public enum Role
-{
-    None,
-    Tank,
-    Heal,
-    Melee,
-    PhysicalRanged,
-    MagicalRanged
-}
+namespace XIVCalc;
 
+/// <summary>
+/// FFXIV jobs as their in-game values
+/// </summary>
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public enum Job : byte
 {
+    /// <summary>
+    /// Adventurer
+    /// </summary>
     ADV = 0,
+    /// <summary>
+    /// Astrologian
+    /// </summary>
     AST = 33,
+    /// <summary>
+    /// Black MAge
+    /// </summary>
     BLM = 25,
+    /// <summary>
+    /// Blue Mage
+    /// </summary>
     BLU = 36,
+    /// <summary>
+    /// Bard
+    /// </summary>
     BRD = 23,
+    /// <summary>
+    /// Dancer
+    /// </summary>
     DNC = 38,
+    /// <summary>
+    /// Dragoon
+    /// </summary>
     DRG = 22,
+    /// <summary>
+    /// Dark Knight
+    /// </summary>
     DRK = 32,
+    /// <summary>
+    /// Gunbreaker
+    /// </summary>
     GNB = 37,
+    /// <summary>
+    /// Machinist
+    /// </summary>
     MCH = 31,
+    /// <summary>
+    /// Monk
+    /// </summary>
     MNK = 20,
+    /// <summary>
+    /// Ninja
+    /// </summary>
     NIN = 30,
+    /// <summary>
+    /// Paladin
+    /// </summary>
     PLD = 19,
+    /// <summary>
+    /// Redmage
+    /// </summary>
     RDM = 35,
+    /// <summary>
+    /// Reaper
+    /// </summary>
     RPR = 39,
+    /// <summary>
+    /// Samurai
+    /// </summary>
     SAM = 34,
+    /// <summary>
+    /// Scholar
+    /// </summary>
     SCH = 28,
+    /// <summary>
+    /// Sage
+    /// </summary>
     SGE = 40,
+    /// <summary>
+    /// Summoner
+    /// </summary>
     SMN = 27,
+    /// <summary>
+    /// Warrior
+    /// </summary>
     WAR = 21,
+    /// <summary>
+    /// White Mage
+    /// </summary>
     WHM = 24,
+    /// <summary>
+    /// Gladiator
+    /// </summary>
     GLA = 1,
+    /// <summary>
+    /// Marauder
+    /// </summary>
     MRD = 3,
+    /// <summary>
+    /// Lancer
+    /// </summary>
     LNC = 4,
+    /// <summary>
+    /// Pugilist
+    /// </summary>
     PGL = 2,
+    /// <summary>
+    /// Archer
+    /// </summary>
     ARC = 5,
+    /// <summary>
+    /// Thaumaturge
+    /// </summary>
     THM = 7,
+    /// <summary>
+    /// Arcanist
+    /// </summary>
     ACN = 26,
+    /// <summary>
+    /// Conjurer
+    /// </summary>
     CNJ = 6,
+    /// <summary>
+    /// Rogue
+    /// </summary>
     ROG = 29,
+    /// <summary>
+    /// Viper
+    /// </summary>
     VPR = 41,
+    /// <summary>
+    /// Pictomancer
+    /// </summary>
     PCT = 42,
 }
+
+/// <summary>
+/// Collection of all stat types with their associated in-game index
+/// </summary>
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public enum StatType : byte
 {
     None,
@@ -124,23 +221,57 @@ public enum StatType : byte
     Unknown73,
     Count,
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+/// <summary>
+/// Type of attack
+/// </summary>
+public enum AttackType
+{
+    /// <summary>
+    /// Unknown 
+    /// </summary>
+    Unknown,
+    /// <summary>
+    /// Weapon Skill
+    /// </summary>
+    WeaponSkill,
+    /// <summary>
+    /// Auto Attack
+    /// </summary>
+    AutoAttack
+}
+/// <summary>
+/// List of commonly used classifications of jobs
+/// </summary>
 public static class EnumExtensions
 {
+    /// <summary>
+    /// Determines if job role is tank
+    /// </summary>
     public static bool IsTank(this Job job)
     {
         return job is Job.DRK or Job.GNB or Job.PLD or Job.WAR or Job.GLA or Job.MRD;
     }
-
+    
+    /// <summary>
+    /// Determines if job role is physical ranged
+    /// </summary>
     public static bool IsPhysicalRanged(this Job job)
     {
         return job is Job.BRD or Job.DNC or Job.MCH or Job.ARC;
     }
 
+    /// <summary>
+    /// Determines if job role is melee
+    /// </summary>
     public static bool IsMelee(this Job job)
     {
         return job is Job.DRG or Job.MNK or Job.NIN or Job.RPR or Job.SAM or Job.LNC or Job.PGL or Job.ROG or Job.VPR;
     }
 
+    /// <summary>
+    /// Determines if job is a caster type
+    /// </summary>
     public static bool IsCaster(this Job job)
     {
         return job is Job.AST or Job.SCH or Job.SGE or Job.WHM or Job.CNJ or Job.BLM or Job.BLU or Job.RDM or Job.SMN
