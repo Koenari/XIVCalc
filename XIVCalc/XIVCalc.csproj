@@ -5,7 +5,6 @@
     <PackageId>XIVCalc</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Koenari</Authors>
-    <Company></Company>
     <Version>0.3.0-alpha2</Version>
     <LangVersion>12</LangVersion>
     <AssemblyVersion>0.3.0</AssemblyVersion>
@@ -29,7 +28,14 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
+    <DocumentationFile>XIVCalc.xml</DocumentationFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DocumentationFile>XIVCalc.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>XIVCalc.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\"></None>

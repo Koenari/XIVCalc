@@ -1,0 +1,1063 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XIVCalc</name>
+    </assembly>
+    <members>
+        <member name="T:XIVCalc.Calculations.LevelTable">
+            <summary>
+            Static Values that are tied to job level
+            </summary>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.MP(System.Int32)">
+            <summary>
+            MP
+            </summary>
+            <param name="level">Current level</param>
+            <returns>MP</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.MAIN(System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.LevelTable.IntMAIN(System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.IntMAIN(System.Int32)">
+            <summary>
+            Main stat base value
+            </summary>
+            <param name="level">Current level</param>
+            <returns>Main</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.SUB(System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.LevelTable.IntSUB(System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.IntSUB(System.Int32)">
+            <summary>
+            Sub stat base value
+            </summary>
+            <param name="level">Current level</param>
+            <returns>Sub</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.DIV(System.Int32)">
+            <summary>
+            The DIV value is returned as double by default to prevent unintentional rounding on division.
+            See <see cref="M:XIVCalc.Calculations.LevelTable.IntDIV(System.Int32)"/> for integer variant.
+            </summary>
+            <param name="level">Level to get Value for.</param>
+            <returns>DIV value for level</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.IntDIV(System.Int32)">
+            <summary>
+            Divider value for this level
+            </summary>
+            <param name="level">Current level</param>
+            <returns>Div</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.HP(System.Int32)">
+            <summary>
+            HP base value
+            </summary>
+            <param name="level">Current level</param>
+            <returns>HP</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.ELMT(System.Int32)">
+            <summary>
+            Elemental def base
+            </summary>
+            <param name="level">Current level</param>
+            <returns>Elmt</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.LevelTable.THREAT(System.Int32)">
+            <summary>
+            Threat
+            </summary>
+            <param name="level">Current level</param>
+            <returns>Threat</returns>
+        </member>
+        <member name="T:XIVCalc.Calculations.StatBlockEquations">
+            <inheritdoc />
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.#ctor(XIVCalc.Interfaces.IJobStatBlock)">
+            <inheritdoc />
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.GetJobModifier(XIVCalc.StatType)">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.GetAttackModifierM">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.GetAutoAttackStatModifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.GetTraitModifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.GetHpMultiplier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.CritDamage">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.CritChance">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.DirectHitChance">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.DirectHitDamage">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.AutoDirectHitMultiplier">
+            <inheritdoc />
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.DeterminationMultiplier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.TenacityOffensiveModifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.TenacityDefensiveModifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.MpPerTick">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.Gcd">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.DotMultiplier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.HotMultiplier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.PhysicalDefenseMitigation">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.MagicalDefenseMitigation">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.MaxHp">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.WeaponDamageMultiplier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.MainStatMultiplier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.AutoAttackModifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.BaseDamage(System.Int32,XIVCalc.AttackType,System.Boolean,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatBlockEquations.AverageSkillDamage(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:XIVCalc.Calculations.StatEquations">
+            <summary>
+            Collection of FFXIV equations
+            </summary>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.GetJobModifier(XIVCalc.StatType,XIVCalc.Interfaces.IJobModifiers)">
+            <summary>
+            Calculates a multiplicative modifier based on the Job/class
+            </summary>
+            <param name="statType">Which stat is being queried</param>
+            <param name="job">Current job to evaluate for</param>
+            <returns>Multiplicative modifier to apply to stat</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.GetAttackModifierM(System.Int32,XIVCalc.Job)">
+            <summary>
+            Calculates the Attack modifier. Named 'm' in AllaganStudies formulas
+            </summary>
+            <param name="level">current level of the job</param>
+            <param name="job">current job</param>
+            <returns>Attack Modifier 'm'</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.GetAutoAttackStatModifier(XIVCalc.Interfaces.IJobModifiers)">
+            <summary>
+            Modifier for auto attacks 
+            </summary>
+            <param name="job"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.GetTraitModifier(System.Int32,XIVCalc.Job)">
+            <summary>
+            Calculates the trait modifier
+            </summary>
+            <param name="level">current level of the job</param>
+            <param name="job">current job</param>
+            <returns>Trait modifier</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.GetHpMultiplier(System.Int32,XIVCalc.Job)">
+            <summary>
+            Calculates the Hp multiplier (also called ??). Basically SE's way to balance Vitality to actual HP
+            Currently depends on level and if you are tank or not
+            </summary>
+            <param name="level">Level of the job supplied</param>
+            <param name="job">THe job to be evaluated for</param>
+            <returns>A multiplier to calculate HP from Vit</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.CritDamage(System.Int32,System.Int32)">
+            <summary>
+            Damage modifier for a critical hit
+            </summary>
+            <param name="criticalHit">Value of critical hit stat</param>
+            <param name="level">Current level</param>
+            <returns>Damage modifier</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.CritChance(System.Int32,System.Int32)">
+            <summary>
+            Chance to land a critical hit
+            </summary>
+            <param name="criticalHit">Value of critical hit stat</param>
+            <param name="level">Current level</param>
+            <returns>Crit chance</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.DirectHitChance(System.Int32,System.Int32)">
+            <summary>
+            Chance to land a direct hit
+            </summary>
+            <param name="directHit">Value of direct hit stat</param>
+            <param name="level">Current level</param>
+            <returns>Dh chance</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.DirectHitDamage(System.Int32,System.Int32)">
+            <summary>
+            Calculates direct hit damage multiplier
+            </summary>
+            <param name="directHit">Current Direct Hit value</param>
+            <param name="level">Current level</param>
+            <returns>Damage multiplier</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.AutoDirectHitMultiplier(System.Int32,System.Int32)">
+            <summary>
+            Damage multiplier for skill that automatically direct hit
+            </summary>
+            <param name="directHit">Current Direct Hit value</param>
+            <param name="level">Current level</param>
+            <returns>Dmg multiplier</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.DeterminationMultiplier(System.Int32,System.Int32)">
+            <summary>
+            Damage multiplier affected by determination
+            </summary>
+            <param name="determination">Current det value</param>
+            <param name="level">Current level</param>
+            <returns>Dmg multiplier</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.TenacityOffensiveModifier(System.Int32,System.Int32)">
+            <summary>
+            Damage multiplier affected by tenacity
+            </summary>
+            <param name="tenacity">Current tenacity value</param>
+            <param name="level">Current level</param>
+            <returns>Dmg multiplier</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.TenacityDefensiveModifier(System.Int32,System.Int32)">
+            <summary>
+            Incoming damage multiplier affected by tenacity
+            </summary>
+            <param name="tenacity">Current tenacity value</param>
+            <param name="level">Current level</param>
+            <returns>Incoming damage multiplier</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.MpPerTick(System.Int32,System.Int32)">
+            <summary>
+            MP gained per tick
+            </summary>
+            <param name="piety">Current piety value</param>
+            <param name="level">Current level</param>
+            <returns>MP/t</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.SksToGcd(System.Int32,System.Int32,System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.CalcGcd(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.SpsToGcd(System.Int32,System.Int32,System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.CalcGcd(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.CalcGcd(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Calculates effective GCD
+            </summary>
+            <param name="speed">SKS or SPS value</param>
+            <param name="level">Current level</param>
+            <param name="haste">Haste on the player (if applicable)</param>
+            <returns>GCD</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.DotMultiplier(System.Int32,System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TickMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.HotMultiplier(System.Int32,System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TickMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.SksTickMultiplier(System.Int32,System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TickMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.SpsTickMultiplier(System.Int32,System.Int32)">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TickMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.TickMultiplier(System.Int32,System.Int32)">
+            <summary>
+            Multiplier for ticking damage/healing based on SPS/SKS
+            AkhMorning equivalent: F(SPD)
+            </summary>
+            <param name="speed">SPS or SKS</param>
+            <param name="level">level</param>
+            <returns>Multiplicative modifier for over time effects</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.DefenseMitigation(System.Int32,System.Int32)">
+            <summary>
+            Calculates how much incoming damage ist mitigated
+            </summary>
+            <param name="defense">Value of defense corresponding to damage type</param>
+            <param name="level">Current level</param>
+            <returns>Fraction of damage mitigated</returns>s
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.Hp(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)">
+            <summary>
+            Calculates max hit points
+            </summary>
+            <param name="vitality">Vitality value</param>
+            <param name="level">Current level</param>
+            <param name="jobMod">Active job</param>
+            <returns>Max HP</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.WeaponDamageMultiplier(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)">
+            <summary>
+            Convert a Weapon Damage value to a damage multiplier.
+            AkhMorning equivalent: F(WD)
+            </summary>
+            <param name="weaponDamage">Weapon damage value</param>
+            <param name="level">level</param>
+            <param name="job">Active job</param>
+            <returns>Damage Multiplier F(WD)</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.MainStatMultiplier(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)">
+            <summary>
+            Convert a main stat value to a damage multiplier.
+            AkhMorning equivalent: F(AP) or F(ATK)
+            </summary>
+            <param name="mainStat">Value of main stat</param>
+            <param name="level">Current level</param>
+            <param name="job">Active job</param>
+            <returns>Damage Multiplier F(AP)/F(ATK)</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.AutoAttackModifier(System.Int32,System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)">
+            <summary>
+            Like <see cref="M:XIVCalc.Calculations.StatEquations.WeaponDamageMultiplier(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)"/>, but for auto-attacks.
+            AkhMorning equivalent: f(AUTO)
+            </summary>
+            <param name="weaponDamage">Value of weapon damage</param>
+            <param name="weaponDelay">Value of weapon delay</param>
+            <param name="level">Current level</param>
+            <param name="job"></param>
+            <returns>Auto-attack damage multiplier f(AUTO)</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.BaseDamage(System.Int32,XIVCalc.Interfaces.IJobStatBlock,XIVCalc.AttackType,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Calculates the base damage of a skill  with given properties (without crit or direct hit)
+            </summary>
+            <param name="potency">Potency of the skill</param>
+            <param name="stats">Statblock</param>
+            <param name="attackType">Type of attack</param>
+            <param name="isAutoCrit">If skill auto crits</param>
+            <param name="isAutoDh">If skill auto direct hits</param>
+            <param name="isDot">If is a dot</param>
+            <returns>Damage</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.AverageSkillDamage(System.Int32,XIVCalc.Interfaces.IJobStatBlock)">
+            <summary>
+            Calculates DPS if skill of given potency is repeated every GCD 
+            </summary>
+            <param name="potency">Potency of the skill</param>
+            <param name="stats">Statblock</param>
+            <returns>"DPS"</returns>
+        </member>
+        <member name="T:XIVCalc.Job">
+            <summary>
+            FFXIV jobs as their in-game values
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.ADV">
+            <summary>
+            Adventurer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.AST">
+            <summary>
+            Astrologian
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BLM">
+            <summary>
+            Black MAge
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BLU">
+            <summary>
+            Blue Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BRD">
+            <summary>
+            Bard
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.DNC">
+            <summary>
+            Dancer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.DRG">
+            <summary>
+            Dragoon
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.DRK">
+            <summary>
+            Dark Knight
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.GNB">
+            <summary>
+            Gunbreaker
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.MCH">
+            <summary>
+            Machinist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.MNK">
+            <summary>
+            Monk
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.NIN">
+            <summary>
+            Ninja
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.PLD">
+            <summary>
+            Paladin
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.RDM">
+            <summary>
+            Redmage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.RPR">
+            <summary>
+            Reaper
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SAM">
+            <summary>
+            Samurai
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SCH">
+            <summary>
+            Scholar
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SGE">
+            <summary>
+            Sage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SMN">
+            <summary>
+            Summoner
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.WAR">
+            <summary>
+            Warrior
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.WHM">
+            <summary>
+            White Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.GLA">
+            <summary>
+            Gladiator
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.MRD">
+            <summary>
+            Marauder
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.LNC">
+            <summary>
+            Lancer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.PGL">
+            <summary>
+            Pugilist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.ARC">
+            <summary>
+            Archer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.THM">
+            <summary>
+            Thaumaturge
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.ACN">
+            <summary>
+            Arcanist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.CNJ">
+            <summary>
+            Conjurer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.ROG">
+            <summary>
+            Rogue
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.VPR">
+            <summary>
+            Viper
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.PCT">
+            <summary>
+            Pictomancer
+            </summary>
+        </member>
+        <member name="T:XIVCalc.StatType">
+            <summary>
+            Collection of all stat types with their associated in-game index
+            </summary>
+        </member>
+        <member name="T:XIVCalc.AttackType">
+            <summary>
+            Type of attack
+            </summary>
+        </member>
+        <member name="F:XIVCalc.AttackType.Unknown">
+            <summary>
+            Unknown 
+            </summary>
+        </member>
+        <member name="F:XIVCalc.AttackType.WeaponSkill">
+            <summary>
+            Weapon Skill
+            </summary>
+        </member>
+        <member name="F:XIVCalc.AttackType.AutoAttack">
+            <summary>
+            Auto Attack
+            </summary>
+        </member>
+        <member name="T:XIVCalc.EnumExtensions">
+            <summary>
+            List of commonly used classifications of jobs
+            </summary>
+        </member>
+        <member name="M:XIVCalc.EnumExtensions.IsTank(XIVCalc.Job)">
+            <summary>
+            Determines if job role is tank
+            </summary>
+        </member>
+        <member name="M:XIVCalc.EnumExtensions.IsPhysicalRanged(XIVCalc.Job)">
+            <summary>
+            Determines if job role is physical ranged
+            </summary>
+        </member>
+        <member name="M:XIVCalc.EnumExtensions.IsMelee(XIVCalc.Job)">
+            <summary>
+            Determines if job role is melee
+            </summary>
+        </member>
+        <member name="M:XIVCalc.EnumExtensions.IsCaster(XIVCalc.Job)">
+            <summary>
+            Determines if job is a caster type
+            </summary>
+        </member>
+        <member name="T:XIVCalc.Interfaces.IJobModifiers">
+            <summary>
+            Describes the properties specific to different
+            Modifiers are generally meant to be used as in Value * Mod / 100 
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.Job">
+            <summary>
+            Job described
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.HitPoints">
+            <summary>
+            Hit point modifier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.ManaPoints">
+            <summary>
+            Mana point modifier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.Strength">
+            <summary>
+            Strength multiplier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.Vitality">
+            <summary>
+            Vitality modifier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.Dexterity">
+            <summary>
+            Dexterity modifier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.Intelligence">
+            <summary>
+            Intelligence modifier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.Mind">
+            <summary>
+            Mind modifier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.Piety">
+            <summary>
+            Piety modifier
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobModifiers.PrimaryStat">
+            <summary>
+            Type of stat that is primarily used by this job
+            </summary>
+        </member>
+        <member name="T:XIVCalc.Interfaces.IJobStatBlock">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.JobModifiers">
+            <inheritdoc cref="T:XIVCalc.Interfaces.IJobModifiers"/>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Level">
+            <summary>
+            Current level
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.WeaponDamage">
+            <summary>
+            Weapon Damage
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.WeaponDelay">
+            <summary>
+            Weapon Delay
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.MainStat">
+            <summary>
+            Main or Primary stat for that job
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Vitality">
+            <summary>
+            Vitality
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Strength">
+            <summary>
+            Strength
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Dexterity">
+            <summary>
+            Dexterity
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Intelligence">
+            <summary>
+            Intelligence
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Mind">
+            <summary>
+            Mind
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.PhysicalDefense">
+            <summary>
+            Physical defense
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.MagicalDefense">
+            <summary>
+            Magical defense
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.AttackPower">
+            <summary>
+            Attack power
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.AttackMagicPotency">
+            <summary>
+            Attack magic potency
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.HealingMagicPotency">
+            <summary>
+            Healing magic potency
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.DirectHit">
+            <summary>
+            Direct hit
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.CriticalHit">
+            <summary>
+            Critical hit
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Determination">
+            <summary>
+            Determination
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.SkillSpeed">
+            <summary>
+            Skill speed
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.SpellSpeed">
+            <summary>
+            Spell speed
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Piety">
+            <summary>
+            Piety
+            </summary>
+        </member>
+        <member name="P:XIVCalc.Interfaces.IJobStatBlock.Tenacity">
+            <summary>
+            Tenacity
+            </summary>
+        </member>
+        <member name="T:XIVCalc.Interfaces.IStatEquations">
+            <summary>
+            Set of stat equations
+            </summary>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.GetJobModifier(XIVCalc.StatType)">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.GetJobModifier(XIVCalc.StatType,XIVCalc.Interfaces.IJobModifiers)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.GetAttackModifierM">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.GetAttackModifierM(System.Int32,XIVCalc.Job)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.GetAutoAttackStatModifier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.GetAutoAttackStatModifier(XIVCalc.Interfaces.IJobModifiers)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.GetTraitModifier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.GetTraitModifier(System.Int32,XIVCalc.Job)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.GetHpMultiplier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.GetHpMultiplier(System.Int32,XIVCalc.Job)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.CritDamage">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.CritDamage(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.CritChance">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.CritChance(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.DirectHitChance">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.DirectHitChance(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.DirectHitDamage">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.DirectHitDamage(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.AutoDirectHitMultiplier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.AutoDirectHitMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.DeterminationMultiplier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.DeterminationMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.TenacityOffensiveModifier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TenacityOffensiveModifier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.TenacityDefensiveModifier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TenacityDefensiveModifier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.MpPerTick">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.MpPerTick(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.Gcd">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.CalcGcd(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.DotMultiplier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TickMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.HotMultiplier">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.TickMultiplier(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.PhysicalDefenseMitigation">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.DefenseMitigation(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.MagicalDefenseMitigation">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.DefenseMitigation(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.MaxHp">
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.Hp(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)"/>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.WeaponDamageMultiplier">
+            <summary>
+            Convert a Weapon Damage value to a damage multiplier.
+            AkhMorning equivalent: F(WD)
+            </summary>
+            <returns>Damage Multiplier F(WD)</returns>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.MainStatMultiplier">
+            <summary>
+            AkhMorning equivalent: F(AP) or F(ATK)
+            </summary>
+            <returns>Damage Multiplier F(AP)/F(ATK)</returns>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.AutoAttackModifier">
+            <summary>
+            Like <see cref="M:XIVCalc.Interfaces.IStatEquations.WeaponDamageMultiplier"/>, but for auto-attacks.
+            AkhMorning equivalent: f(AUTO)
+            </summary>
+            <returns>Auto-attack damage multiplier f(AUTO)</returns>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.BaseDamage(System.Int32,XIVCalc.AttackType,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Calculates the base damage of a skill  with given properties (without crit or direct hit)
+            </summary>
+            <param name="potency">Potency of the skill</param>
+            <param name="attackType">Type of attack</param>
+            <param name="isAutoCrit">If skill auto crits</param>
+            <param name="isAutoDh">If skill auto direct hits</param>
+            <param name="isDot">If is a dot</param>
+            <returns>Damage</returns>
+        </member>
+        <member name="M:XIVCalc.Interfaces.IStatEquations.AverageSkillDamage(System.Int32)">
+            <summary>
+            Calculates avarage damage for a skill of given potency 
+            </summary>
+            <param name="potency">Potency of the skill</param>
+            <returns>Damage</returns>
+        </member>
+        <member name="T:XIVCalc.Jobs.FixedJobModifiers">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.Job">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.HitPoints">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.ManaPoints">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.Strength">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.Vitality">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.Dexterity">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.Intelligence">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.Mind">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.Piety">
+            <inheritdoc/>
+        </member>
+        <member name="P:XIVCalc.Jobs.FixedJobModifiers.PrimaryStat">
+            <inheritdoc/>
+        </member>
+        <member name="T:XIVCalc.Jobs.StaticJobs">
+            <summary>
+            Collection of job modifiers
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.ADV">
+            <summary>
+            Adventurer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.GLA">
+            <summary>
+            Gladiator
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.PGL">
+            <summary>
+            Gladiator
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.MRD">
+            <summary>
+            Gladiator
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.LNC">
+            <summary>
+            Gladiator
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.ARC">
+            <summary>
+            Archer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.CNJ">
+            <summary>
+            Conjurer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.THM">
+            <summary>
+            Conjurer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.PLD">
+            <summary>
+            Paladin
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.MNK">
+            <summary>
+            Mok
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.WAR">
+            <summary>
+            Warrior
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.DRG">
+            <summary>
+            Dragoon
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.BRD">
+            <summary>
+            Bard
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.WHM">
+            <summary>
+            White Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.BLM">
+            <summary>
+            Black Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.ACN">
+            <summary>
+            Arcanist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.SMN">
+            <summary>
+            Summoner
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.SCH">
+            <summary>
+            Scholar
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.ROG">
+            <summary>
+            Rogue
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.NIN">
+            <summary>
+            Ninja
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.MCH">
+            <summary>
+            Machinist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.DRK">
+            <summary>
+            Dark Knight
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.AST">
+            <summary>
+            Astrologian
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.SAM">
+            <summary>
+            Samurai
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.RDM">
+            <summary>
+            Red Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.BLU">
+            <summary>
+            Blue Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.GNB">
+            <summary>
+            Gunbreaker
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.DNC">
+            <summary>
+            Dancer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.RPR">
+            <summary>
+            Reaper
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.SGE">
+            <summary>
+            Sage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.VPR">
+            <summary>
+            Viper
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Jobs.StaticJobs.PCT">
+            <summary>
+            Pictomancer
+            </summary>
+        </member>
+    </members>
+</doc>
