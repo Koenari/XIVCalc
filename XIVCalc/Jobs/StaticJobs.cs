@@ -204,6 +204,7 @@ public static class StaticJobs
         Mind = 115,
         Vitality = 100,
         HitPoints = 105,
+        PrimaryStat = StatType.Mind,
     };
     /// <summary>
     /// Black Mage
