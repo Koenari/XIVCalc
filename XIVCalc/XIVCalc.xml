@@ -314,7 +314,7 @@
             <param name="level">Current level</param>
             <returns>Fraction of damage mitigated</returns>s
         </member>
-        <member name="M:XIVCalc.Calculations.StatEquations.Hp(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)">
+        <member name="M:XIVCalc.Calculations.StatEquations.MaxHp(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)">
             <summary>
             Calculates max hit points
             </summary>
@@ -821,7 +821,7 @@
             <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.DefenseMitigation(System.Int32,System.Int32)"/>
         </member>
         <member name="M:XIVCalc.Interfaces.IStatEquations.MaxHp">
-            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.Hp(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)"/>
+            <inheritdoc cref="M:XIVCalc.Calculations.StatEquations.MaxHp(System.Int32,System.Int32,XIVCalc.Interfaces.IJobModifiers)"/>
         </member>
         <member name="M:XIVCalc.Interfaces.IStatEquations.WeaponDamageMultiplier">
             <summary>
