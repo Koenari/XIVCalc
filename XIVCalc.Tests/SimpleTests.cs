@@ -82,6 +82,23 @@ public class SimpleTests
         DirectHit = 2108,
         Vitality = 2445,
     });
+
+    //https://xivgear.app/?page=sl%7Cf08b1517-d55b-485d-b474-13ae5bcd7b16
+    private readonly StatBlockEquations _dmgTest = new(new JobStatMock()
+    {
+        JobModifiers = StaticJobs.WHM,
+        Level    = 100,
+        WeaponDamage = 141,
+        Mind = 4328,
+        CriticalHit = 1510,
+        Determination = 2272,
+        DirectHit = 420,
+        AttackMagicPotency = 4328,
+        HealingMagicPotency = 4328,
+        SpellSpeed = 665,
+        Piety = 1711,
+        Tenacity = 420,
+    });
     
     [SetUp]
     public void Setup()
@@ -89,6 +106,13 @@ public class SimpleTests
         
     }
 
+    [Test]
+    public void TestDamage()
+    {
+        Assert.That(_dmgTest.BaseDamage(100), Is.EqualTo(5946));
+        Assert.That(_dmgTest.AverageSkillDamage(100), Is.EqualTo(6309.8));
+    }
+    
     [Test]
     public void TestMainStatMulti()
     {

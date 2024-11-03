@@ -400,20 +400,19 @@ public static class StatEquations
         if (UsesCasterDamageFormula(stats.JobModifiers, attackType)) {
             // https://github.com/Amarantine-xiv/Amas-FF14-Combat-Sim_source/blob/main/ama_xiv_combat_sim/simulator/calcs/compute_damage_utils.py#L130
             var apDet = Floor(100* mainStatMulti * effectiveDetMulti)/100;
-            var basePotency = Floor(apDet * Floor(100 * wdMulti * potency)/100);
+            var basePotency = Floor(apDet * Floor( wdMulti * potency));
             // Factor in Tenacity multiplier
-            var afterTnc = Floor(100 * basePotency * tncMulti)/100;
-            // noinspection UnnecessaryLocalVariableJS
-            var afterSpd = Floor(1000* afterTnc * spdMulti)/1000;
+            var afterTnc = Floor(basePotency * tncMulti);
+            var afterSpd = Floor(afterTnc * spdMulti);
             stage1Potency = afterSpd;
         }
         else {
-            var basePotency = Floor(100 * potency * mainStatMulti)/100;
+            var basePotency = Floor(potency * mainStatMulti);
             // Factor in determination and auto DH multiplier
-            var afterDet = Floor(100 * basePotency * effectiveDetMulti)/100;
+            var afterDet = Floor(basePotency * effectiveDetMulti);
             // Factor in Tenacity multiplier
-            var afterTnc = Floor(100 * afterDet * tncMulti)/100;
-            var afterSpd = Floor(1000 * afterTnc * spdMulti)/1000;
+            var afterTnc = Floor(afterDet * tncMulti);
+            var afterSpd = Floor(afterTnc * spdMulti);
             // Factor in weapon damage multiplier
             stage1Potency = Floor(afterSpd * wdMulti);
         }
@@ -423,7 +422,7 @@ public static class StatEquations
             : stage1Potency;
         var afterAutoDh =
             isAutoDh ? Floor(afterAutoCrit * (1 + dhRate * (dhMulti - 1))) : afterAutoCrit;
-        return Floor(Floor(afterAutoDh * traitMulti) / 100d);
+        return Floor(afterAutoDh * traitMulti)+(potency <100 ? 1:0);
     }
 
     /// <summary>
@@ -439,7 +438,7 @@ public static class StatEquations
         var dhRate = DirectHitChance(stats.DirectHit, stats.Level);
         var critDmgMod = CritDamage(stats.CriticalHit, stats.Level);
         var dhDmgMod = DirectHitDamage(stats.DirectHit, stats.Level);
-        return baseDmg * (1 + (dhDmgMod - 1) * dhRate) * (1 + (1 - critDmgMod) * critRate);
+        return Floor(10 * baseDmg * (1 + (dhDmgMod - 1) * dhRate + (critDmgMod-1) * critRate))/10;
     }
 }
 

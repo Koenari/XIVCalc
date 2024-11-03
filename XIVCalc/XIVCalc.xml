@@ -384,109 +384,14 @@
             Adventurer
             </summary>
         </member>
-        <member name="F:XIVCalc.Job.AST">
-            <summary>
-            Astrologian
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.BLM">
-            <summary>
-            Black MAge
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.BLU">
-            <summary>
-            Blue Mage
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.BRD">
-            <summary>
-            Bard
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.DNC">
-            <summary>
-            Dancer
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.DRG">
-            <summary>
-            Dragoon
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.DRK">
-            <summary>
-            Dark Knight
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.GNB">
-            <summary>
-            Gunbreaker
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.MCH">
-            <summary>
-            Machinist
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.MNK">
-            <summary>
-            Monk
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.NIN">
-            <summary>
-            Ninja
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.PLD">
-            <summary>
-            Paladin
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.RDM">
-            <summary>
-            Redmage
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.RPR">
-            <summary>
-            Reaper
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.SAM">
-            <summary>
-            Samurai
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.SCH">
-            <summary>
-            Scholar
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.SGE">
-            <summary>
-            Sage
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.SMN">
-            <summary>
-            Summoner
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.WAR">
-            <summary>
-            Warrior
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.WHM">
-            <summary>
-            White Mage
-            </summary>
-        </member>
         <member name="F:XIVCalc.Job.GLA">
             <summary>
             Gladiator
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.PGL">
+            <summary>
+            Pugilist
             </summary>
         </member>
         <member name="F:XIVCalc.Job.MRD">
@@ -499,24 +404,9 @@
             Lancer
             </summary>
         </member>
-        <member name="F:XIVCalc.Job.PGL">
-            <summary>
-            Pugilist
-            </summary>
-        </member>
         <member name="F:XIVCalc.Job.ARC">
             <summary>
             Archer
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.THM">
-            <summary>
-            Thaumaturge
-            </summary>
-        </member>
-        <member name="F:XIVCalc.Job.ACN">
-            <summary>
-            Arcanist
             </summary>
         </member>
         <member name="F:XIVCalc.Job.CNJ">
@@ -524,9 +414,174 @@
             Conjurer
             </summary>
         </member>
+        <member name="F:XIVCalc.Job.THM">
+            <summary>
+            Thaumaturge
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.CRP">
+            <summary>
+            Carpenter
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BSM">
+            <summary>
+            Blacksmith
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.ARM">
+            <summary>
+            Armorer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.GSM">
+            <summary>
+            Goldsmith
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.LTW">
+            <summary>
+            Leatherworker
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.WVR">
+            <summary>
+            Weaver
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.ALC">
+            <summary>
+            Alchemist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.CUL">
+            <summary>
+            Culinarian
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.MIN">
+            <summary>
+            Miner
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BTN">
+            <summary>
+            Botanist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.FSH">
+            <summary>
+            Fisher
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.PLD">
+            <summary>
+            Paladin
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.WAR">
+            <summary>
+            Warrior
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.MNK">
+            <summary>
+            Monk
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.DRG">
+            <summary>
+            Dragoon
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BRD">
+            <summary>
+            Bard
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.WHM">
+            <summary>
+            White Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BLM">
+            <summary>
+            Black MAge
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.ACN">
+            <summary>
+            Arcanist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SMN">
+            <summary>
+            Summoner
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SCH">
+            <summary>
+            Scholar
+            </summary>
+        </member>
         <member name="F:XIVCalc.Job.ROG">
             <summary>
             Rogue
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.NIN">
+            <summary>
+            Ninja
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.MCH">
+            <summary>
+            Machinist
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.DRK">
+            <summary>
+            Dark Knight
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.AST">
+            <summary>
+            Astrologian
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SAM">
+            <summary>
+            Samurai
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.RDM">
+            <summary>
+            Redmage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.BLU">
+            <summary>
+            Blue Mage
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.GNB">
+            <summary>
+            Gunbreaker
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.DNC">
+            <summary>
+            Dancer
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.RPR">
+            <summary>
+            Reaper
+            </summary>
+        </member>
+        <member name="F:XIVCalc.Job.SGE">
+            <summary>
+            Sage
             </summary>
         </member>
         <member name="F:XIVCalc.Job.VPR">
