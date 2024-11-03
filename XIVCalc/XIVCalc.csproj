@@ -5,7 +5,7 @@
     <PackageId>XIVCalc</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Koenari</Authors>
-    <Version>0.3.0-alpha4</Version>
+    <Version>0.3.0</Version>
     <LangVersion>12</LangVersion>
     <AssemblyVersion>0.3.0</AssemblyVersion>
     
