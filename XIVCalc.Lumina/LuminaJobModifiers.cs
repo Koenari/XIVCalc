@@ -1,4 +1,4 @@
-﻿using Lumina.Excel.GeneratedSheets;
+﻿using Lumina.Excel.Sheets;
 using XIVCalc.Interfaces;
 
 namespace XIVCalc.Lumina;
