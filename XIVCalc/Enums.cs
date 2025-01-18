@@ -266,6 +266,30 @@ public enum StatType : byte
     Count,
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+/// <summary>
+/// Bonus to main stat gained by roles in party
+/// </summary>
+public enum PartyBonus
+{
+    /// <summary>
+    /// No Party bonus
+    /// </summary>
+    None = 0,
+    /// <summary>
+    /// Bonus for 2 distinct roles
+    /// </summary>
+    ThreePercent,
+    /// <summary>
+    /// Bonus for 3 distinct roles
+    /// </summary>
+    FourPercent,
+    /// <summary>
+    /// Bonus for 4 distinct roles
+    /// </summary>
+    FivePercent,
+}
+
 /// <summary>
 /// Type of attack
 /// </summary>

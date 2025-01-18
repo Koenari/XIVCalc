@@ -440,6 +440,22 @@ public static class StatEquations
         var dhDmgMod = DirectHitDamage(stats.DirectHit, stats.Level);
         return Floor(10 * baseDmg * (1 + (dhDmgMod - 1) * dhRate + (critDmgMod-1) * critRate))/10;
     }
+
+    /// <summary>
+    /// Applies the party bonus to main stat
+    /// </summary>
+    /// <param name="partyBonus"></param>
+    /// <param name="mainStat"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public static double MainStatWithPartyBonus(PartyBonus partyBonus, double mainStat) =>
+        partyBonus switch
+        {
+            PartyBonus.ThreePercent => mainStat * 1.03,
+            PartyBonus.FourPercent  => mainStat * 1.04,
+            PartyBonus.FivePercent  => mainStat * 1.05,
+            PartyBonus.None or _    => mainStat,
+        };
 }
 
 
