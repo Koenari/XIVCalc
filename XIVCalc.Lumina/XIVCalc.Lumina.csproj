@@ -21,10 +21,10 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="Lumina.Excel" Version="7.1.0">
+      <PackageReference Include="Lumina.Excel" Version="7.1.3">
           <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
       </PackageReference>
-      <PackageReference Include="XIVCalc" Version="0.3.0" />
+      <PackageReference Include="XIVCalc" Version="0.3.1" />
     </ItemGroup>
     <ItemGroup>
         <None Include="README.md" Pack="true" PackagePath="\"/>

@@ -1,14 +1,10 @@
-using Lumina.Excel.GeneratedSheets;
 using XIVCalc.Calculations;
-using XIVCalc.Interfaces;
 using XIVCalc.Jobs;
 
 namespace XIVCalc.Tests;
 
 public class SimpleTests
 {
-    private readonly IJobModifiers _whm = StaticJobs.WHM;
-    
     private readonly StatBlockEquations _statsMin = new(new JobStatMock
     {
         Level = 100,
