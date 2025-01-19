@@ -356,10 +356,10 @@
         </member>
         <member name="M:XIVCalc.Calculations.StatEquations.BaseDamage(System.Int32,XIVCalc.Interfaces.IJobStatBlock,XIVCalc.AttackType,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            Calculates the base damage of a skill  with given properties (without crit or direct hit)
+            Calculates the base damage a skill  with given properties does (without crit or direct hit)
             </summary>
             <param name="potency">Potency of the skill</param>
-            <param name="stats">Statblock</param>
+            <param name="stats">Stat-block</param>
             <param name="attackType">Type of attack</param>
             <param name="isAutoCrit">If skill auto crits</param>
             <param name="isAutoDh">If skill auto direct hits</param>
@@ -371,8 +371,16 @@
             Calculates DPS if skill of given potency is repeated every GCD 
             </summary>
             <param name="potency">Potency of the skill</param>
-            <param name="stats">Statblock</param>
+            <param name="stats">Stat-block</param>
             <returns>"DPS"</returns>
+        </member>
+        <member name="M:XIVCalc.Calculations.StatEquations.MainStatWithPartyBonus(XIVCalc.PartyBonus,System.Double)">
+            <summary>
+            Applies the party bonus to main stat
+            </summary>
+            <param name="partyBonus">Info on eligible bonus</param>
+            <param name="mainStat">Stat with all other bonuses applied</param>
+            <returns>Stat with party bonus applied</returns>
         </member>
         <member name="T:XIVCalc.Job">
             <summary>
@@ -597,6 +605,31 @@
         <member name="T:XIVCalc.StatType">
             <summary>
             Collection of all stat types with their associated in-game index
+            </summary>
+        </member>
+        <member name="T:XIVCalc.PartyBonus">
+            <summary>
+            Bonus to main stat gained by roles in party
+            </summary>
+        </member>
+        <member name="F:XIVCalc.PartyBonus.None">
+            <summary>
+            No Party bonus
+            </summary>
+        </member>
+        <member name="F:XIVCalc.PartyBonus.ThreePercent">
+            <summary>
+            Bonus for 2 distinct roles
+            </summary>
+        </member>
+        <member name="F:XIVCalc.PartyBonus.FourPercent">
+            <summary>
+            Bonus for 3 distinct roles
+            </summary>
+        </member>
+        <member name="F:XIVCalc.PartyBonus.FivePercent">
+            <summary>
+            Bonus for 4 distinct roles
             </summary>
         </member>
         <member name="T:XIVCalc.AttackType">

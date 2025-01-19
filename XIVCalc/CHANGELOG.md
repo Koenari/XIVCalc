@@ -1,4 +1,6 @@
 ﻿# Changelog
+## 0.3.1
+- Add functionality for party bonus
 ## 0.3.0
 - Complete overhaul
 ## 0.2.0

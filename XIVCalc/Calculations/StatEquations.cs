@@ -356,10 +356,10 @@ public static class StatEquations
     }
     
     /// <summary>
-    /// Calculates the base damage of a skill  with given properties (without crit or direct hit)
+    /// Calculates the base damage a skill  with given properties does (without crit or direct hit)
     /// </summary>
     /// <param name="potency">Potency of the skill</param>
-    /// <param name="stats">Statblock</param>
+    /// <param name="stats">Stat-block</param>
     /// <param name="attackType">Type of attack</param>
     /// <param name="isAutoCrit">If skill auto crits</param>
     /// <param name="isAutoDh">If skill auto direct hits</param>
@@ -429,7 +429,7 @@ public static class StatEquations
     /// Calculates DPS if skill of given potency is repeated every GCD 
     /// </summary>
     /// <param name="potency">Potency of the skill</param>
-    /// <param name="stats">Statblock</param>
+    /// <param name="stats">Stat-block</param>
     /// <returns>"DPS"</returns>
     public static double AverageSkillDamage(int potency,IJobStatBlock stats)
     {
@@ -444,10 +444,9 @@ public static class StatEquations
     /// <summary>
     /// Applies the party bonus to main stat
     /// </summary>
-    /// <param name="partyBonus"></param>
-    /// <param name="mainStat"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <param name="partyBonus">Info on eligible bonus</param>
+    /// <param name="mainStat">Stat with all other bonuses applied</param>
+    /// <returns>Stat with party bonus applied</returns>
     public static double MainStatWithPartyBonus(PartyBonus partyBonus, double mainStat) =>
         partyBonus switch
         {
