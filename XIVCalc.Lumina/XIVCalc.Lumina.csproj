@@ -4,7 +4,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>7.2.1</Version>
+        <Version>7.2.2</Version>
         <Title>Lumina adapter for XivCalc</Title>
         <Authors>Koenari</Authors>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -21,7 +21,7 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="Lumina.Excel" Version="7.2.1">
+      <PackageReference Include="Lumina.Excel" Version="7.2.2">
           <PrivateAssets>contentfiles;analyzers;build;runtime</PrivateAssets>
       </PackageReference>
       <PackageReference Include="XIVCalc" Version="0.3.1" />
